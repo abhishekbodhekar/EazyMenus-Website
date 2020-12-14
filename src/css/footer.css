@@ -1,0 +1,17 @@
+footer {
+  color: gray;
+  font-size: 14px;
+  text-align: center;
+  padding: 20px;
+  background: gray;
+}
+footer strong {
+  color: grey;
+}
+footer .footer-links {
+  margin-bottom: 24px;
+}
+footer .footer-links a {
+  margin: 0 8px;
+  color: grey;
+}
