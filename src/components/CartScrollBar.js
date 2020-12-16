@@ -4,6 +4,7 @@ import { Scrollbars } from "react-custom-scrollbars";
 class CartScrollBar extends Component {
   constructor(props) {
     super(props);
+    this.myRef = React.createRef();
     this.handleScroll = this.handleScroll.bind(this);
   }
   componentDidMount() {
@@ -13,7 +14,7 @@ class CartScrollBar extends Component {
     window.removeEventListener("scroll", this.handleScroll);
   }
   handleScroll(event) {
-    const positions = this.refs.scrollbars.getValues();
+    const positions = this.myRef.current.getValues();
     //When the bottom is reached and we're scrolling down, prevent scrolling of the window
     if (positions.top >= 1) {
       console.log("Reached scroll end!");
@@ -22,7 +23,7 @@ class CartScrollBar extends Component {
   }
   render() {
     return (
-      <Scrollbars style={{ width: 360, height: 320 }} ref="scrollbars">
+      <Scrollbars style={{ width: 360, height: 320 }} ref={this.myRef}>
         {this.props.children}
       </Scrollbars>
     );

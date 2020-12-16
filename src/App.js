@@ -39,12 +39,18 @@ class App extends Component {
   // Fetch Initial Set of Products from external API
   getProducts() {
     let url =
-      "https://res.cloudinary.com/sivadass/raw/upload/v1535817394/json/products.json";
-    axios.get(url).then(response => {
+      "https://us-central1-easymenuspro.cloudfunctions.net/GetMenu";
+    axios.post(url, { H_ID: 'abhi' }, {
+      headers: {
+        'Content-Type': 'text/plain'
+      }
+    }).then(response => {
+      console.log(response.data);
       this.setState({
-        products: response.data
+        products: response.data.Data.menu
       });
     });
+
   }
   componentWillMount() {
     this.getProducts();
@@ -178,12 +184,7 @@ class App extends Component {
           updateQuantity={this.updateQuantity}
           openModal={this.openModal}
         />
-        <Footer />
-        <QuickView
-          product={this.state.quickViewProduct}
-          openModal={this.state.modalActive}
-          closeModal={this.closeModal}
-        />
+        {/* <Footer /> */}
       </div>
     );
   }

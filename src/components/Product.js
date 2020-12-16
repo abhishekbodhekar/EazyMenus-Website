@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import Counter from "./Counter";
+import Collapse from 'react-bootstrap/Collapse';
 
 class Product extends Component {
 	constructor(props) {
@@ -7,7 +8,8 @@ class Product extends Component {
 		this.state = {
 			selectedProduct: {},
 			quickViewProduct: {},
-			isAdded: false
+			isAdded: false,
+			open: false
 		};
 	}
 	addToCart(image, name, price, id, quantity) {
@@ -40,12 +42,16 @@ class Product extends Component {
 		);
 	}
 
+	togglePanel() {
+		this.setState({
+			open: !this.state.open
+		});
+	}
+
 	render() {
-		let image = this.props.image;
-		let name = this.props.name;
-		let price = this.props.price;
+		let category = this.props.category;
+		let items = this.props.items;
 		let id = this.props.id;
-		let quantity = this.props.productQuantity;
 		// return (
 		//   <div className="row">
 		//     <div className="col-md-12">
@@ -75,16 +81,18 @@ class Product extends Component {
 		//     </div>
 		//   </div>
 		// );
+		const listItems = items.map((item) => <li key={item.name}>{item.name}</li>);
 		return (
 			<div className="row">
 				<div className="col-md-12">
-					<div onClick={(e) => this.togglePanel(e)} className='header'>
-						{this.props.title}</div>
-					{this.state.open ? (
-						<div className='content'>
-							{this.props.children}
+					<div onClick={(e) => this.togglePanel(e)} className='category' aria-expanded={this.state.open} aria-controls="example-collapse-text">
+						{this.props.category}
+					</div>
+					<Collapse in={this.state.open}>
+						<div id="example-collapse-text">
+							{listItems}
 						</div>
-					) : null}
+					</Collapse>
 				</div>
 			</div>
 		);

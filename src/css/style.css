@@ -1,6 +1,6 @@
 /* Custom Styles go here */
 .menus-wrapper {
-    padding-top: 98px;
+    padding-top: 62px;
     animation: a .3s linear;
     animation-delay: .15s;
     background-color: #F5F5F5;
@@ -25,4 +25,36 @@
     font-family: verdana;
     font-size: 14px;
     transition: padding 1s ease-in;
+}
+
+.itemName {
+    font-size: 20px;
+    font-weight: bold;
+    padding: 5px 5px 5px 5px;
+    border-bottom: 1px solid #ddd;
+}
+
+.itemDescription {
+    font-size: 14px;
+    font-weight: normal;
+}
+
+.pl-10 {
+    padding-left: 10px;
+}
+
+.p-15 {
+    padding: 15px;
+}
+
+.p-10 {
+    padding: 10px;
+}
+
+.pull-right {
+    float: right;
+}
+
+.pull-left {
+    float: left;
 }

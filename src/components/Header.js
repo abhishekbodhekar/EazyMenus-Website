@@ -11,7 +11,8 @@ class Header extends Component {
     this.state = {
       showCart: false,
       cart: this.props.cartItems,
-      mobileSearch: false
+      mobileSearch: false,
+      searchBox: ''
     };
   }
   handleCart(e) {
@@ -35,23 +36,16 @@ class Header extends Component {
       {
         mobileSearch: false
       },
-      function() {
-        this.refs.searchBox.value = "";
+      function () {
+        this.state.searchBox = "";
         this.props.handleMobileSearch();
       }
     );
   }
   handleClickOutside(event) {
-    const cartNode = findDOMNode(this.refs.cartPreview);
-    const buttonNode = findDOMNode(this.refs.cartButton);
-    if (cartNode.classList.contains("active")) {
-      if (!cartNode || !cartNode.contains(event.target)) {
-        this.setState({
-          showCart: false
-        });
-        event.stopPropagation();
-      }
-    }
+    this.setState({
+      showCart: false
+    });
   }
   componentDidMount() {
     document.addEventListener(
@@ -113,11 +107,7 @@ class Header extends Component {
       <header>
         <div className="container">
           <div className="brand">
-            <img
-              className="logo"
-              src="https://res.cloudinary.com/sivadass/image/upload/v1493547373/dummy-logo/Veggy.png"
-              alt="Veggy Brand Logo"
-            />
+            <h2>Eazy Menu Card</h2>
           </div>
 
           <div className="search">
@@ -150,8 +140,8 @@ class Header extends Component {
               </a>
               <input
                 type="search"
-                ref="searchBox"
-                placeholder="Search for Vegetables and Fruits"
+                value={this.state.searchBox}
+                placeholder="Search for Dish"
                 className="search-keyword"
                 onChange={this.props.handleSearch}
               />
@@ -188,7 +178,6 @@ class Header extends Component {
               className="cart-icon"
               href="#"
               onClick={this.handleCart.bind(this)}
-              ref="cartButton"
             >
               <img
                 className={this.props.cartBounce ? "tada" : " "}
@@ -198,14 +187,13 @@ class Header extends Component {
               {this.props.totalItems ? (
                 <span className="cart-count">{this.props.totalItems}</span>
               ) : (
-                ""
-              )}
+                  ""
+                )}
             </a>
             <div
               className={
                 this.state.showCart ? "cart-preview active" : "cart-preview"
               }
-              ref="cartPreview"
             >
               <CartScrollBar>{view}</CartScrollBar>
               <div className="action-block">
