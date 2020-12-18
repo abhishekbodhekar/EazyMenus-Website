@@ -4,6 +4,7 @@ import Counter from "./Counter";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { findDOMNode } from "react-dom";
+import Button from 'react-bootstrap/Button';
 
 class Header extends Component {
   constructor(props) {
@@ -63,6 +64,7 @@ class Header extends Component {
   }
   render() {
     let cartItems;
+    // console.log(this.state.cart, 'this.state.cart');
     cartItems = this.state.cart.map(product => {
       return (
         <li className="cart-item" key={product.name}>
@@ -116,10 +118,7 @@ class Header extends Component {
               href="#"
               onClick={this.handleMobileSearch.bind(this)}
             >
-              <img
-                src="https://res.cloudinary.com/sivadass/image/upload/v1494756966/icons/search-green.png"
-                alt="search"
-              />
+              <i className="fa fa-search"></i>
             </a>
             <form
               action="#"
@@ -133,10 +132,7 @@ class Header extends Component {
                 href="#"
                 onClick={this.handleSearchNav.bind(this)}
               >
-                <img
-                  src="https://res.cloudinary.com/sivadass/image/upload/v1494756030/icons/back.png"
-                  alt="back"
-                />
+                <i className="fa fa-arrow-left"></i>
               </a>
               <input
                 type="search"
@@ -145,11 +141,7 @@ class Header extends Component {
                 className="search-keyword"
                 onChange={this.props.handleSearch}
               />
-              <button
-                className="search-button"
-                type="submit"
-                onClick={this.handleSubmit.bind(this)}
-              />
+              <Button className="search-button" variant="warning" onClick={this.handleSubmit.bind(this)}></Button>
             </form>
           </div>
 
@@ -179,11 +171,7 @@ class Header extends Component {
               href="#"
               onClick={this.handleCart.bind(this)}
             >
-              <img
-                className={this.props.cartBounce ? "tada" : " "}
-                src="https://res.cloudinary.com/sivadass/image/upload/v1493548928/icons/bag.png"
-                alt="Cart"
-              />
+              <i className="fa fa-shopping-cart"></i>
               {this.props.totalItems ? (
                 <span className="cart-count">{this.props.totalItems}</span>
               ) : (

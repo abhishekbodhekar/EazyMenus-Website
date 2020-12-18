@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 class Counter extends Component {
   constructor(props) {
     super(props);
+    this.feedQty = React.createRef();
     this.state = { value: this.props.productQuantity };
     this.increment = this.increment.bind(this);
     this.decrement = this.decrement.bind(this);
@@ -14,7 +15,7 @@ class Counter extends Component {
       prevState => ({
         value: Number(prevState.value) + 1
       }),
-      function() {
+      function () {
         this.props.updateQuantity(this.state.value);
       }
     );
@@ -23,14 +24,14 @@ class Counter extends Component {
 
   decrement(e) {
     e.preventDefault();
-    if (this.state.value <= 1) {
+    if (this.state.value <= 0) {
       return this.state.value;
     } else {
       this.setState(
         prevState => ({
           value: Number(prevState.value) - 1
         }),
-        function() {
+        function () {
           this.props.updateQuantity(this.state.value);
         }
       );
@@ -40,9 +41,9 @@ class Counter extends Component {
   feed(e) {
     this.setState(
       {
-        value: this.refs.feedQty.value
+        value: this.feedQty.current.value
       },
-      function() {
+      function () {
         this.props.updateQuantity(this.state.value);
       }
     );
@@ -50,7 +51,7 @@ class Counter extends Component {
 
   resetQuantity() {
     this.setState({
-      value: 1
+      value: 0
     });
   }
   render() {
@@ -60,7 +61,7 @@ class Counter extends Component {
           –
         </a>
         <input
-          ref="feedQty"
+          ref={this.feedQty}
           type="number"
           className="quantity"
           value={this.state.value}

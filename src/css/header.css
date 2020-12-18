@@ -23,11 +23,11 @@ header .container {
     padding: 0;
  }
 }
-@media (max-width: 480px) {
+/* @media (max-width: 480px) {
   header {
     padding: 8px 12px;
  }
-}
+} */
 @keyframes slideUp {
   0% {
     transform: translateY(30px);
@@ -54,14 +54,14 @@ header .container {
 }
 @media (max-width: 767px) {
   .search {
-    margin-left: 32px;
+    margin-left: 54px;
  }
 }
 @media (max-width: 480px) {
   .search {
     flex-grow: initial;
     -webkit-flex-grow: initial;
-    margin-left: auto;
+    /* margin-left: auto; */
  }
 }
 .search-form {
@@ -73,9 +73,9 @@ header .container {
     display: none;
     position: absolute;
     top: 0;
-    left: 0;
+    left: -8px;
     width: 100%;
-    padding: 8px;
+    padding: 10px;
     background: #fff;
     z-index: 100;
  }
@@ -86,7 +86,7 @@ header .container {
 }
 .search-form .search-keyword {
   height: 36px;
-  border: 1px solid green;
+  border: 1px solid #FFC107;
   padding: 0 16px;
   border-radius: 2px 0 0 2px;
   width: 100%;
@@ -103,7 +103,7 @@ header .container {
 }
 .search-form .search-button {
   border-radius: 0 2px 2px 0;
-  background: green url(https://res.cloudinary.com/sivadass/image/upload/v1494692031/icons/search.png) center no-repeat;
+  background: #FFC107 url(https://res.cloudinary.com/sivadass/image/upload/v1494692031/icons/search.png) center no-repeat;
   width: 96px;
 }
 @media (max-width: 480px) {
@@ -115,6 +115,7 @@ header .container {
 @media (min-width: 481px) {
   .mobile-search, .back-button {
     display: none;
+    font-size: 28px;
  }
 }
 @media (max-width: 480px) {
@@ -122,10 +123,13 @@ header .container {
     display: block;
     height: 36px;
     width: 36px;
+    font-size: 28px;
  }
   .back-button {
     display: block;
     margin-right: 8px;
+    font-size: 22px;
+    color: #FFC107;
  }
 }
 .cart {
@@ -137,7 +141,7 @@ header .container {
 }
 @media (max-width: 991px) {
   .cart {
-    margin-left: 16px;
+    margin-left: 0;
  }
 }
 @media (max-width: 991px) {
@@ -147,7 +151,7 @@ header .container {
 }
 .cart-info table {
   font-size: 14px;
-  color: green;
+  color: #FFC107;
   text-align: right;
 }
 .cart-info table tr {
@@ -162,6 +166,8 @@ header .container {
   margin-left: 16px;
   z-index: 99;
   position: relative;
+  color: #FFC107;
+  font-size: 28px;
 }
 @media (min-width: 992px) {
   .cart-count {
@@ -172,7 +178,7 @@ header .container {
   .cart-count {
     display: block;
     position: absolute;
-    background: orange;
+    background: #FFC107;
     height: 24px;
     line-height: 24px;
     text-align: center;
@@ -249,7 +255,7 @@ header .container {
   width: 100%;
 }
 .action-block button {
-  background: orange;
+  background: #FFC107;
   display: block;
   width: 100%;
 }

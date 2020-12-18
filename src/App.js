@@ -8,6 +8,7 @@ import "./css/header.css";
 import "./css/footer.css";
 import "./css/modal.css";
 import "./css/style.css";
+import "./css/menu.css";
 
 class App extends Component {
   constructor() {
@@ -20,7 +21,7 @@ class App extends Component {
       term: "",
       category: "",
       cartBounce: false,
-      quantity: 1,
+      quantity: 0,
       quickViewProduct: {},
       modalActive: false
     };
@@ -45,7 +46,6 @@ class App extends Component {
         'Content-Type': 'text/plain'
       }
     }).then(response => {
-      console.log(response.data);
       this.setState({
         products: response.data.Data.menu
       });
@@ -75,7 +75,6 @@ class App extends Component {
     let productID = selectedProducts.id;
     let productQty = selectedProducts.quantity;
     if (this.checkProduct(productID)) {
-      console.log("hi");
       let index = cartItem.findIndex(x => x.id == productID);
       cartItem[index].quantity =
         Number(cartItem[index].quantity) + Number(productQty);
@@ -93,7 +92,7 @@ class App extends Component {
       function () {
         this.setState({
           cartBounce: false,
-          quantity: 1
+          quantity: 0
         });
         console.log(this.state.quantity);
         console.log(this.state.cart);
@@ -141,7 +140,6 @@ class App extends Component {
 
   //Reset Quantity
   updateQuantity(qty) {
-    console.log("quantity added...");
     this.setState({
       quantity: qty
     });

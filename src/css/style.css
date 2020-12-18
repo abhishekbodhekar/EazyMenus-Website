@@ -1,44 +1,4 @@
 /* Custom Styles go here */
-.menus-wrapper {
-    padding-top: 62px;
-    animation: a .3s linear;
-    animation-delay: .15s;
-    background-color: #F5F5F5;
-}
-
-.category{
-    cursor: pointer;
-    border: solid 1px #f2f2f2;
-    padding: 15px;
-    background-color: #0089CC;
-    color: #FFF;
-    font-family: verdana;
-}
-  
-.category-content{
-    cursor: pointer;
-    border-left: solid 1px #f2f2f2;
-    border-right: solid 1px #f2f2f2;
-    border-bottom: solid 1px #f2f2f2;
-    border-radius: 0 0 5px 5px;
-    padding: 15px;
-    font-family: verdana;
-    font-size: 14px;
-    transition: padding 1s ease-in;
-}
-
-.itemName {
-    font-size: 20px;
-    font-weight: bold;
-    padding: 5px 5px 5px 5px;
-    border-bottom: 1px solid #ddd;
-}
-
-.itemDescription {
-    font-size: 14px;
-    font-weight: normal;
-}
-
 .pl-10 {
     padding-left: 10px;
 }
@@ -51,10 +11,22 @@
     padding: 10px;
 }
 
+.mt-10 {
+    margin-top: 10px;
+}
+
+.fs-20 {
+    font-size: 20px;
+}
+
 .pull-right {
     float: right;
 }
 
 .pull-left {
     float: left;
+}
+
+.inline-block {
+    display: inline-block !important;
 }
