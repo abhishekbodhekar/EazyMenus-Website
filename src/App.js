@@ -70,38 +70,41 @@ class App extends Component {
     console.log(this.state.category);
   }
   // Add to Cart
-  handleAddToCart(selectedProducts) {
-    let cartItem = this.state.cart;
-    let productID = selectedProducts.id;
-    let productQty = selectedProducts.quantity;
-    if (this.checkProduct(productID)) {
-      let index = cartItem.findIndex(x => x.id == productID);
-      cartItem[index].quantity =
-        Number(cartItem[index].quantity) + Number(productQty);
+  handleAddToCart(selectedProduct) {
+    let cart = this.state.cart;
+
+    let productName = selectedProduct.name;
+    let productQty = selectedProduct.quantity;
+    if (this.checkProduct(productName)) {
+	  let index = cart.findIndex(x => x.name === productName);
+	  if (productQty === 0) cart.splice(index, 1);
+      else cart[index].quantity = Number(productQty);
       this.setState({
-        cart: cartItem
+        cart
       });
     } else {
-      cartItem.push(selectedProducts);
-    }
-    this.setState({
-      cart: cartItem,
-      cartBounce: true
-    });
-    setTimeout(
-      function () {
-        this.setState({
-          cartBounce: false,
-          quantity: 0
-        });
-        console.log(this.state.quantity);
-        console.log(this.state.cart);
-      }.bind(this),
-      1000
-    );
+		cart.push(selectedProduct);
+	}
+	this.setState({
+		cart: cart,
+		cartBounce: true
+	  });
+	  setTimeout(function () {
+		  this.setState({
+			cartBounce: false
+		  });
+		}.bind(this), 1000);
     this.sumTotalItems(this.state.cart);
     this.sumTotalAmount(this.state.cart);
   }
+
+  checkProduct(productName) {
+    let cart = this.state.cart;
+    return cart.some(function (item) {
+      return item.name === productName;
+    });
+  }
+
   handleRemoveProduct(id, e) {
     let cart = this.state.cart;
     let index = cart.findIndex(x => x.id == id);
@@ -113,12 +116,7 @@ class App extends Component {
     this.sumTotalAmount(this.state.cart);
     e.preventDefault();
   }
-  checkProduct(productID) {
-    let cart = this.state.cart;
-    return cart.some(function (item) {
-      return item.id === productID;
-    });
-  }
+
   sumTotalItems() {
     let total = 0;
     let cart = this.state.cart;

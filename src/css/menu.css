@@ -14,7 +14,7 @@
     color: #FFF;
     font-family: verdana;
 }
-  
+
 .category-content{
     cursor: pointer;
     border-left: solid 1px #f2f2f2;
@@ -45,7 +45,7 @@
     text-decoration: none;
     color: inherit;
     font-size: 24px;
-    line-height: 16px;
+    line-height: 20px;
     -moz-user-select: none;
     -webkit-user-select: none;
 }

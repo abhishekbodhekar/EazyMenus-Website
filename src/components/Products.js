@@ -1,8 +1,5 @@
+/* eslint-disable array-callback-return */
 import React, { Component } from "react";
-import Product from "./Product";
-import LoadingProducts from "../loaders/Products";
-import NoResults from "../empty-states/NoResults";
-import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Collapse from 'react-bootstrap/Collapse';
 import Counter from "./Counter";
 import Button from 'react-bootstrap/Button';
@@ -51,10 +48,14 @@ class Products extends Component {
 	}
 	updateQuantity(item, qty) {
 		item.quantity = qty;
+		this.props.addToCart({
+			name: item.name,
+			price: item.price,
+			quantity: item.quantity
+		});
 	}
 	render() {
 		this.state.menus = this.props.productsList;
-		// let quantity = this.props.productQuantity;
 		let term = this.props.searchTerm;
 		const categories = this.state.menus.map((cat, index) => {
 

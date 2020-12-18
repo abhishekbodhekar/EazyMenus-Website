@@ -5,6 +5,7 @@ import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import { findDOMNode } from "react-dom";
 import Button from 'react-bootstrap/Button';
+import axios from 'axios';
 
 class Header extends Component {
   constructor(props) {
@@ -25,6 +26,24 @@ class Header extends Component {
   handleSubmit(e) {
     e.preventDefault();
   }
+
+  placeOrder() {
+		let payload = {
+			"H_ID": "sahil",
+			"table_id": "2",
+			"order": this.state.cart
+    };
+		axios.post('https://us-central1-easymenuspro.cloudfunctions.net/PlaceOrder', payload, {
+			headers: {
+				'Content-Type': 'text/plain'
+			}
+		}).then((response) => {
+			console.log(response, 'success resp');
+		}).catch((error) => {
+			console.error(error);
+		});
+  }
+
   handleMobileSearch(e) {
     e.preventDefault();
     this.setState({
@@ -64,20 +83,19 @@ class Header extends Component {
   }
   render() {
     let cartItems;
-    // console.log(this.state.cart, 'this.state.cart');
     cartItems = this.state.cart.map(product => {
       return (
         <li className="cart-item" key={product.name}>
-          <img className="product-image" src={product.image} />
+          {/* <img className="product-image" src={product.image} /> */}
           <div className="product-info">
             <p className="product-name">{product.name}</p>
             <p className="product-price">{product.price}</p>
           </div>
-          <div className="product-total">
-            <p className="quantity">
+          <div className="product-info text-right">
+            <p className="product-name">
               {product.quantity} {product.quantity > 1 ? "Nos." : "No."}{" "}
             </p>
-            <p className="amount">{product.quantity * product.price}</p>
+            <p className="product-price">{product.quantity * product.price}</p>
           </div>
           <a
             className="product-remove"
@@ -185,12 +203,7 @@ class Header extends Component {
             >
               <CartScrollBar>{view}</CartScrollBar>
               <div className="action-block">
-                <button
-                  type="button"
-                  className={this.state.cart.length > 0 ? " " : "disabled"}
-                >
-                  PROCEED TO CHECKOUT
-                </button>
+                <Button variant="warning" className={this.state.cart.length > 0 ? " " : "disabled"} onClick={this.placeOrder.bind(this)}>PLACE ORDER</Button>
               </div>
             </div>
           </div>

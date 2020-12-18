@@ -277,14 +277,17 @@ header .container {
 }
 .cart-items {
   height: 320px;
-  width: 360px;
+  max-height: 320px;
+  width: 350px;
+  padding: 0 !important;
 }
 .cart-item {
   display: flex;
   display: -webkit-flex;
   align-items: center;
   -webkit-align-items: center;
-  padding: 8px;
+  padding: 5px;
+  border-bottom: 1px solid #ddd;
 }
 .cart-item .product-image {
   width: 48px;
@@ -295,12 +298,14 @@ header .container {
   flex-grow: 1;
 }
 .cart-item .product-info .product-name {
-  color: gray;
+  color: orange;
   font-size: 14px;
+  margin-bottom: .2rem !important;
 }
 .cart-item .product-info .product-price {
   color: gray;
   font-weight: 700;
+  margin-bottom: .2rem !important;
 }
 .cart-item .product-info .product-price:before {
   content: "₹ ";
@@ -309,12 +314,13 @@ header .container {
   margin-left: 16px;
 }
 .cart-item .product-total .quantity {
-  color: gray;
+  color: orange;
   font-size: 14px;
   text-align: right;
+  margin-bottom: .2rem !important;
 }
 .cart-item .product-total .amount {
-  color: gray;
+  color: black;
   font-weight: 700;
   text-align: right;
 }
