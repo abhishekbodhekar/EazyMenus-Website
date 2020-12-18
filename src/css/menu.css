@@ -1,15 +1,15 @@
 .menus-wrapper {
-    padding-top: 6rem;
+    padding-top: 7.5rem;
     animation: a .3s linear;
     animation-delay: .15s;
-    background-color: #F5F5F5;
+    /* background-color: #F5F5F5; */
     width: 100%;
 }
 
 .category{
     cursor: pointer;
     border: solid 1px #f2f2f2;
-    padding: 15px;
+    padding: 10px;
     background-color: #0089CC;
     color: #FFF;
     font-family: verdana;
@@ -35,7 +35,8 @@
     justify-content: flex-end;
     margin: 0 auto;
 }
-.stepper-input .increment, .stepper-input .decrement {
+
+.stepper-input .decrement {
     height: 24px;
     width: 24px;
     border: 1px solid gray;
@@ -43,7 +44,22 @@
     box-sizing: border-box;
     border-radius: 50%;
     text-decoration: none;
-    color: inherit;
+    color: orangered;
+    font-size: 24px;
+    line-height: 20px;
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
+
+.stepper-input .increment {
+    height: 24px;
+    width: 24px;
+    border: 1px solid gray;
+    text-align: center;
+    box-sizing: border-box;
+    border-radius: 50%;
+    text-decoration: none;
+    color: green;
     font-size: 24px;
     line-height: 20px;
     -moz-user-select: none;

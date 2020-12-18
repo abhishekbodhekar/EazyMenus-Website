@@ -39,8 +39,8 @@ class App extends Component {
   }
   // Fetch Initial Set of Products from external API
   getProducts() {
-    let url =
-      "https://us-central1-easymenuspro.cloudfunctions.net/GetMenu";
+    // let hotel = this.props.match.hotelId || 'abhi';
+    let url = "https://us-central1-easymenuspro.cloudfunctions.net/GetMenu";
     axios.post(url, { H_ID: 'abhi' }, {
       headers: {
         'Content-Type': 'text/plain'
@@ -53,7 +53,7 @@ class App extends Component {
 
   }
   componentWillMount() {
-    this.getProducts();
+      this.getProducts();
   }
 
   // Search by Keyword
@@ -105,13 +105,21 @@ class App extends Component {
     });
   }
 
-  handleRemoveProduct(id, e) {
+  handleRemoveProduct(name, e) {
     let cart = this.state.cart;
-    let index = cart.findIndex(x => x.id == id);
+    let index = cart.findIndex(x => x.name === name);
     cart.splice(index, 1);
     this.setState({
       cart: cart
     });
+
+    let products = this.state.products;
+    products.map((product) => {
+      product.items.map((item) => {
+        if (item.name === name) item.quantity = 0;
+      });
+    });
+    this.setState({products});
     this.sumTotalItems(this.state.cart);
     this.sumTotalAmount(this.state.cart);
     e.preventDefault();

@@ -1,11 +1,10 @@
 import React, { Component } from "react";
 import CartScrollBar from "./CartScrollBar";
-import Counter from "./Counter";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
-import { findDOMNode } from "react-dom";
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import logo from '../assets/img/hotel_logo.jpg';
 
 class Header extends Component {
   constructor(props) {
@@ -38,6 +37,7 @@ class Header extends Component {
 				'Content-Type': 'text/plain'
 			}
 		}).then((response) => {
+			this.setState({cart: []});
 			console.log(response, 'success resp');
 		}).catch((error) => {
 			console.error(error);
@@ -88,22 +88,22 @@ class Header extends Component {
         <li className="cart-item" key={product.name}>
           {/* <img className="product-image" src={product.image} /> */}
           <div className="product-info">
-            <p className="product-name">{product.name}</p>
+            <p className="product-name text-capitalize">{product.name}</p>
             <p className="product-price">{product.price}</p>
           </div>
           <div className="product-info text-right">
-            <p className="product-name">
+            <p className="product-name text-capitalize">
               {product.quantity} {product.quantity > 1 ? "Nos." : "No."}{" "}
             </p>
             <p className="product-price">{product.quantity * product.price}</p>
           </div>
-          <a
+          {/* <a
             className="product-remove"
             href="#"
-            onClick={this.props.removeProduct.bind(this, product.id)}
+            onClick={this.props.removeProduct.bind(this, product.name)}
           >
             ×
-          </a>
+          </a> */}
         </li>
       );
     });
@@ -127,15 +127,18 @@ class Header extends Component {
       <header>
         <div className="container">
           <div className="brand">
-            <h2>Eazy Menu Card</h2>
+          <img
+              className="logo"
+              src={logo}
+              alt="Hotel Name"
+            />
           </div>
 
           <div className="search">
             <a
               className="mobile-search"
               href="#"
-              onClick={this.handleMobileSearch.bind(this)}
-            >
+              onClick={this.handleMobileSearch.bind(this)}>
               <i className="fa fa-search"></i>
             </a>
             <form
@@ -143,13 +146,11 @@ class Header extends Component {
               method="get"
               className={
                 this.state.mobileSearch ? "search-form active" : "search-form"
-              }
-            >
+              }>
               <a
                 className="back-button"
                 href="#"
-                onClick={this.handleSearchNav.bind(this)}
-              >
+                onClick={this.handleSearchNav.bind(this)}>
                 <i className="fa fa-arrow-left"></i>
               </a>
               <input
