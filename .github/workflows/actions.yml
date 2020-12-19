@@ -13,7 +13,7 @@ jobs:
     - name: Use Node.js
       uses: actions/setup-node@v1
     - run: npm install
-    - run: CI=npm run build    
+    - run: npm run build    
     - run: ls
 
 
