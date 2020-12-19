@@ -28,6 +28,7 @@ class Header extends Component {
   }
 
   placeOrder() {
+    if (!this.state.cart.length) return false;
 		let payload = {
 			"H_ID": localStorage.getItem('hotelId'),
 			"table_id": localStorage.getItem('tableId'),

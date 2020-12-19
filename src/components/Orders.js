@@ -95,8 +95,8 @@ class Orders extends Component {
 				return (
 					<div key={itemIndex} className="orderlist-item">
 						<div className="inline-block text-capitalize" style={{width: '90%'}}>
-							<span className="fs-20">{item.name}</span>
-							<span className="fs-18 ml-10">- {item.quantity}</span>
+							<span className="fs-18">{item.name}</span>
+							<span className="fs-16 ml-10">-&nbsp;{item.quantity}</span>
 						</div>
 						<div className="inline-block" style={{width: '10%'}}>
 							{

@@ -24,7 +24,8 @@ class App extends Component {
       cartBounce: false,
       quantity: 0,
       quickViewProduct: {},
-      modalActive: false
+      modalActive: false,
+      hotelInfo: {}
     };
     this.handleSearch = this.handleSearch.bind(this);
     this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -49,7 +50,11 @@ class App extends Component {
 			}
 		}).then(response => {
       this.setState({
-        products: response.data.Data.menu
+        products: response.data.Data.menu,
+        hotelInfo: {
+          hotel_name: response.data.Data.hotel_name,
+          hotel_logo_link: response.data.Data.logoLink
+        }
       });
     });
 
@@ -198,6 +203,7 @@ class App extends Component {
           productQuantity={this.state.quantity}
           updateQuantity={this.updateQuantity}
           openModal={this.openModal}
+          hotelInfo={this.state.hotelInfo}
         />
         {/* <Footer /> */}
       </div>

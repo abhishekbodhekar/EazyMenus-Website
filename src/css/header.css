@@ -29,7 +29,7 @@ header .container {
  }
 } */
 .blue-gradient {
-  background-image: linear-gradient(to right, royalblue , skyblue);
+  background-image: linear-gradient(to right, #7192f7 , skyblue);
 }
 @keyframes slideUp {
   0% {

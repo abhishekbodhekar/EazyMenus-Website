@@ -6,13 +6,15 @@ import Orders from "./Orders";
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import logo from '../assets/img/hotel_logo.jpg';
+import axios from 'axios';
 
 class Products extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			menus: [],
-			activeTab: 'menus'
+			activeTab: 'menus',
+			hotelInfo: {}
 		};
 	}
 	togglePanel(e, $index) {
@@ -25,10 +27,6 @@ class Products extends Component {
 
 	setKey(selectedTab) {
 		this.setState({activeTab: selectedTab});
-	}
-
-	componentWillReceiveProps(nextProps) {
-		this.setState({ menus: nextProps.productsList });
 	}
 
 	increment(item, e) {
@@ -54,22 +52,76 @@ class Products extends Component {
 		});
 	  }
 
-	  feed(item) {
+	feed(item) {
 		this.props.addToCart({
 			name: item.name,
 			price: item.price,
 			quantity: item.quantity
 		});
-	  }
+	}
+
+	addFavoritesCategory() {
+		let url = "https://us-central1-easymenuspro.cloudfunctions.net/GetOrders";
+		axios.post(url, { H_ID: localStorage.getItem('hotelId') }, {
+			headers: {
+				'Content-Type': 'text/plain'
+			}
+		}).then(response => {
+			if (response.data && response.data.Status) {
+				let myOrders = [];
+				response.data.Data.map((resp) => {
+					if (resp.table_id == localStorage.getItem('tableId')) {
+						myOrders = resp.orders;
+					}
+				});
+				// myOrders.map((order) => order.timestamp = new Date(order.timestamp).getTime());
+				let itemNames = new Set();
+				myOrders.map((order) => {
+					order.items.map((item) => {
+						itemNames.add(item.name);
+					});
+				});
+				let orderedItems = Array.from(itemNames);
+
+				let items = [];
+				this.state.menus.map((menu) => {
+					menu.items.map((item) => {
+						if (orderedItems.includes(item.name)) items.push(item);
+					});
+				});
+				this.state.menus.unshift({
+					category: 'Favorites',
+					items
+				});
+				this.setState({
+					menus: this.state.menus
+				});
+			}
+		});
+	}
+
+	componentWillReceiveProps(props) {
+		// if (JSON.stringify(this.state.menus) == JSON.stringify(this.state.menus)) return false;
+		this.setState({
+			menus: props.productsList,
+			hotelInfo: props.hotelInfo
+		}, function() {
+			let favs = this.state.menus.some((menu) => {
+				return menu.category == 'Favorites';
+			});
+			if (!favs) this.addFavoritesCategory();
+		});
+	}
 
 	render() {
 		this.state.menus = this.props.productsList || [];
+		// this.state.hotelInfo = this.props.hotelInfo || {};
 		// let term = this.props.searchTerm;
 		const categories = this.state.menus.map((cat, index) => {
-			const listItems = cat.items.map((item) => {
+			const listItems = cat.items.map((item, itemIndex) => {
 				if (!item.quantity) item.quantity = 0;
 				return (
-					<div key={item.name} className="menu-item shadow">
+					<div key={itemIndex} className="menu-item shadow">
 						<div className="">
 							<div className="inline-block" style={{ width: '75%' }}>
 								<span className="fs-20 text-capitalize">{item.name}</span>
@@ -112,12 +164,12 @@ class Products extends Component {
 				<div className="brand">
 					<img
 						className="logo"
-						src={logo}
-						alt="Hotel Ujwal Pure Veg"
+						src={logo}		//will be replaced by {this.state.hotelInfo.hotel_logo_link}
+						alt={this.state.hotelInfo.hotel_name}
 						/>
 				</div>
 				<div className="text-center fs-18 mb-10">
-					Hotel Ujwal Pure Veg
+					{this.state.hotelInfo.hotel_name}
 				</div>
 				<Tabs
 					id="controlled-tab-example"
