@@ -12,6 +12,8 @@ jobs:
     - uses: actions/checkout@v2
     - name: Use Node.js
       uses: actions/setup-node@v1
+      env: 
+        CI: false
     - run: npm install
     - run: npm run build    
     - run: ls
