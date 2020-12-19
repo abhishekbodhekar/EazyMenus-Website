@@ -16,7 +16,7 @@ jobs:
         CI: false
     - run: CI=false
     - run: npm install
-    - run: npm run build    
+    - run: CI=false npm run build   
     - run: ls
 
 
