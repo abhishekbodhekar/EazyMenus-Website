@@ -1,15 +1,15 @@
+/* eslint-disable jsx-a11y/anchor-is-valid */
 /* eslint-disable array-callback-return */
 import React, { Component } from "react";
 import Collapse from 'react-bootstrap/Collapse';
-import Counter from "./Counter";
 import Orders from "./Orders";
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
+import logo from '../assets/img/hotel_logo.jpg';
 
 class Products extends Component {
 	constructor(props) {
 		super(props);
-		this.counter = React.createRef();
 		this.state = {
 			menus: [],
 			activeTab: 'menus'
@@ -22,14 +22,6 @@ class Products extends Component {
 		});
 		this.setState({ menus: this.state.menus });
 	}
-	updateQuantity(item, qty) {
-		item.quantity = qty;
-		this.props.addToCart({
-			name: item.name,
-			price: item.price,
-			quantity: item.quantity
-		});
-	}
 
 	setKey(selectedTab) {
 		this.setState({activeTab: selectedTab});
@@ -37,8 +29,38 @@ class Products extends Component {
 
 	componentWillReceiveProps(nextProps) {
 		this.setState({ menus: nextProps.productsList });
-		this.counter.current && this.counter.current.resetQuantity();
 	}
+
+	increment(item, e) {
+		e.preventDefault();
+		item.quantity++;
+		this.setState({menus: this.state.menus});
+		this.props.addToCart({
+			name: item.name,
+			price: item.price,
+			quantity: item.quantity
+		});
+	  }
+
+	  decrement(item, e) {
+		e.preventDefault();
+		if (item.quantity === 0) return false;
+		item.quantity--;
+		this.setState({menus: this.state.menus});
+		this.props.addToCart({
+			name: item.name,
+			price: item.price,
+			quantity: item.quantity
+		});
+	  }
+
+	  feed(item) {
+		this.props.addToCart({
+			name: item.name,
+			price: item.price,
+			quantity: item.quantity
+		});
+	  }
 
 	render() {
 		this.state.menus = this.props.productsList || [];
@@ -55,12 +77,17 @@ class Products extends Component {
 							</div>
 							<div className="inline-block text-right" style={{ width: '25%' }}>
 								<span className="fs-20"><i className="fa fa-inr"></i> {item.price}</span>
-								<span><Counter
-									ref={this.counter}
-									productQuantity={item.quantity}
-									updateQuantity={this.updateQuantity.bind(this, item)}
-									resetQuantity={this.resetQuantity}
-								/></span>
+								<span>
+									<div className="stepper-input">
+										<a href="#" className="decrement" onClick={this.decrement.bind(this, item)}> – </a>
+										<input
+										type="number"
+										className="quantity"
+										value={item.quantity}
+										onChange={this.feed.bind(this, item)}/>
+										<a href="#" className="increment" onClick={this.increment.bind(this, item)}> + </a>
+									</div>
+								</span>
 							</div>
 						</div>
 					</div>
@@ -82,6 +109,16 @@ class Products extends Component {
 		});
 		return (
 			<div className="menus-wrapper">
+				<div className="brand">
+					<img
+						className="logo"
+						src={logo}
+						alt="Hotel Ujwal Pure Veg"
+						/>
+				</div>
+				<div className="text-center fs-18 mb-10">
+					Hotel Ujwal Pure Veg
+				</div>
 				<Tabs
 					id="controlled-tab-example"
 					activeKey={this.state.activeTab}
@@ -90,8 +127,10 @@ class Products extends Component {
 					onSelect={(k) => this.setKey(k)}>
 					<Tab eventKey="menus" title="Our Menus">
 					{
-							this.state.activeTab === 'menus' &&
-						<div className="mt-10">{categories}</div>
+						this.state.activeTab === 'menus' && this.state.menus.length > 0 ?
+							(<div className="mt-10">{categories}</div>)
+							:
+							(<div className="p-10 text-center"><h4>No menus to display</h4></div>)
 					}
 					</Tab>
 					<Tab eventKey="orders" title="Your Orders">

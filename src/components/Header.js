@@ -3,8 +3,9 @@ import CartScrollBar from "./CartScrollBar";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Button from 'react-bootstrap/Button';
+import InputGroup from 'react-bootstrap/InputGroup';
+import FormControl from 'react-bootstrap/FormControl';
 import axios from 'axios';
-import logo from '../assets/img/hotel_logo.jpg';
 
 class Header extends Component {
   constructor(props) {
@@ -28,8 +29,8 @@ class Header extends Component {
 
   placeOrder() {
 		let payload = {
-			"H_ID": "abhi",
-			"table_id": "2",
+			"H_ID": localStorage.getItem('hotelId'),
+			"table_id": localStorage.getItem('tableId'),
 			"order": this.state.cart
     };
 		axios.post('https://us-central1-easymenuspro.cloudfunctions.net/PlaceOrder', payload, {
@@ -98,13 +99,13 @@ class Header extends Component {
             </p>
             <p className="product-price">{product.quantity * product.price}</p>
           </div>
-          {/* <a
+          <a
             className="product-remove"
-            href="#"
+            href=""
             onClick={this.props.removeProduct.bind(this, product.name)}
           >
             ×
-          </a> */}
+          </a>
         </li>
       );
     });
@@ -129,16 +130,8 @@ class Header extends Component {
     return (
       <header>
         <div className="container">
-          <div className="brand">
-          <img
-              className="logo"
-              src={logo}
-              alt="Hotel Name"
-            />
-          </div>
-
           <div className="search">
-            <a
+            {/* <a
               className="mobile-search"
               href="#"
               onClick={this.handleMobileSearch.bind(this)}>
@@ -164,7 +157,15 @@ class Header extends Component {
                 onChange={this.props.handleSearch}
               />
               <Button className="search-button" variant="warning" onClick={this.handleSubmit.bind(this)}></Button>
-            </form>
+            </form> */}
+            <InputGroup>
+              <FormControl placeholder="Search for Dish..." aria-label="Small" aria-describedby="inputGroup-sizing-sm" />
+              <InputGroup.Append>
+                <InputGroup.Text id="inputGroup-sizing-sm" className="p-3 bg-warning">
+                <Button className="fa fa-search" variant="default" onClick={this.handleSubmit.bind(this)}></Button>
+                </InputGroup.Text>
+              </InputGroup.Append>
+            </InputGroup>
           </div>
 
           <div className="cart">
@@ -193,7 +194,7 @@ class Header extends Component {
               href="#"
               onClick={this.handleCart.bind(this)}
             >
-              <i className="fa fa-shopping-cart"></i>
+              <Button variant="warning fs-14">Place Order</Button>
               {this.props.totalItems ? (
                 <span className="cart-count">{this.props.totalItems}</span>
               ) : (

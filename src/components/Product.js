@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import Counter from "./Counter";
 import Collapse from 'react-bootstrap/Collapse';
 
 class Product extends Component {
@@ -52,35 +51,6 @@ class Product extends Component {
 		let category = this.props.category;
 		let items = this.props.items;
 		let id = this.props.id;
-		// return (
-		//   <div className="row">
-		//     <div className="col-md-12">
-		//     <h4 className="product-name">{this.props.name}</h4>
-		//     <p className="product-price">{this.props.price}</p>
-		//     <Counter
-		//       productQuantity={quantity}
-		//       updateQuantity={this.props.updateQuantity}
-		//       resetQuantity={this.resetQuantity}
-		//     />
-		//     <div className="product-action">
-		//       <button
-		//         className={!this.state.isAdded ? "" : "added"}
-		//         type="button"
-		//         onClick={this.addToCart.bind(
-		//           this,
-		//           image,
-		//           name,
-		//           price,
-		//           id,
-		//           quantity
-		//         )}
-		//       >
-		//         {!this.state.isAdded ? "ADD TO CART" : "✔ ADDED"}
-		//       </button>
-		//     </div>
-		//     </div>
-		//   </div>
-		// );
 		const listItems = items.map((item) => <li key={item.name}>{item.name}</li>);
 		return (
 			<div className="row">

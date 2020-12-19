@@ -1,15 +1,14 @@
 .menus-wrapper {
-    padding-top: 10rem;
-    animation: a .3s linear;
+    padding-top: 7rem;
     animation-delay: .15s;
     /* background-color: #F5F5F5; */
     width: 100%;
-    position: fixed;
+    animation: slideUp 300ms linear;
 }
 
 @media (max-width: 480px) {
     .menus-wrapper {
-        padding-top: 6.5rem;
+        padding-top: 5rem;
    }
 }
 

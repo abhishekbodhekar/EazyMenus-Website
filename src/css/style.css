@@ -1,4 +1,38 @@
 /* Custom Styles go here */
+.p-0 {
+    padding: 0 !important;
+}
+.p-1 {
+    padding: 1px !important;
+}
+.p-2 {
+    padding: 2px !important;
+}
+.p-3 {
+    padding: 3px !important;
+}
+.p-4 {
+    padding: 4px !important;
+}
+.p-5 {
+    padding: 5px !important;
+}
+.p-6 {
+    padding: 6px !important;
+}
+.p-7 {
+    padding: 7px !important;
+}
+.p-8 {
+    padding: 8px !important;
+}
+.p-9 {
+    padding: 9px !important;
+}
+.p-10 {
+    padding: 10px !important;
+}
+
 .pl-10 {
     padding-left: 10px;
 }
@@ -15,12 +49,40 @@
     margin-top: 10px;
 }
 
+.ml-10 {
+    margin-left: 10px;
+}
+
+.mb-10 {
+    margin-bottom: 10px;
+}
+
+.mr-10 {
+    margin-right: 10px;
+}
+
 .mt-5 {
     margin-top: 5px !important;
 }
 
+.mb-5 {
+    margin-bottom: 5px !important;
+}
+
+.ml-5 {
+    margin-left: 5px !important;
+}
+
+.fs-12 {
+    font-size: 12px;
+}
+
 .fs-14 {
     font-size: 14px;
+}
+
+.fs-18 {
+    font-size: 18px;
 }
 
 .fs-20 {
@@ -41,6 +103,10 @@
 
 .pull-left {
     float: left;
+}
+
+.overflow-hidden {
+    overflow: hidden;
 }
 
 .inline-block {

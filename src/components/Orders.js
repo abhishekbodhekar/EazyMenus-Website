@@ -2,12 +2,14 @@ import React, { Component } from "react";
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
+import moment from "moment";
 
 class Orders extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			orders: []
+			orders: [],
+			table_id: localStorage.getItem('tableId')
 		};
 	}
 
@@ -18,9 +20,21 @@ class Orders extends Component {
 				'Content-Type': 'text/plain'
 			}
 		}).then(response => {
-		  this.setState({
-			orders: response.data.Data[0].orders || []
-		  });
+			if (response.data && response.data.Status) {
+				let myOrders = [];
+				response.data.Data.map((resp) => {
+					if (resp.table_id == this.state.table_id) {
+						myOrders = resp.orders;
+					}
+				});
+				myOrders.map((order) => order.timestamp = new Date(order.timestamp).getTime());
+				myOrders = myOrders.sort(function(x, y){
+					return y.timestamp - x.timestamp;
+				})
+				this.setState({
+					orders: myOrders || []
+				});
+			}
 		});
 	}
 
@@ -33,7 +47,7 @@ class Orders extends Component {
 		if (cnf) {
 			let payload = {
 				H_ID: localStorage.getItem('hotelId'),
-				table_id: localStorage.getItem('tableId'),
+				table_id: this.state.table_id,
 				order_id: this.state.orders[orderIndex].id,
 				is_admin: 0
 			};
@@ -55,7 +69,7 @@ class Orders extends Component {
 		if (cnf) {
 			let payload = {
 				H_ID: localStorage.getItem('hotelId'),
-				table_id: localStorage.getItem('tableId'),
+				table_id: this.state.table_id,
 				order_id: this.state.orders[orderIndex].id,
 				item_id: itemToDelete.id,
 				is_admin: 0
@@ -64,9 +78,9 @@ class Orders extends Component {
 				'Content-Type': 'text/plain'
 			}}).then(response => {
 				this.state.orders[orderIndex].items.splice(itemIndex, 1);
-				if (this.state.orders[orderIndex].items.length === 0) {
-					this.cancelWholeOrder(orderIndex);
-				}
+				// if (this.state.orders[orderIndex].items.length === 0) {
+				// 	this.cancelWholeOrder(orderIndex);
+				// }
 				this.setState({orders: this.state.orders});
 				alert(response.data.Data);
 			  }).catch((error) => {
@@ -80,13 +94,11 @@ class Orders extends Component {
 			let items = order.items.map((item, itemIndex) => {
 				return (
 					<div key={itemIndex} className="orderlist-item">
-						<div className="inline-block text-capitalize" style={{width: '82%'}}>
-							{item.name}
+						<div className="inline-block text-capitalize" style={{width: '90%'}}>
+							<span className="fs-20">{item.name}</span>
+							<span className="fs-18 ml-10">- {item.quantity}</span>
 						</div>
-						<div className="inline-block text-capitalize" style={{width: '10%'}}>
-							{item.quantity}
-						</div>
-						<div className="inline-block" style={{width: '5%'}}>
+						<div className="inline-block" style={{width: '10%'}}>
 							{
 								order.status.toUpperCase() === 'ORDERED' &&
 								<i className="fa fa-times text-danger" onClick={this.cancelItemInOrder.bind(this, itemIndex, orderIndex)}></i>
@@ -101,6 +113,7 @@ class Orders extends Component {
 						<Card.Header as="h5">
 							<div className="inline-block" style={{width: '60%'}}>
 								Order {orderIndex+1}
+								<span className="ml-10 fs-14">({moment(order.timestamp).format('hh:mm A')})</span>
 							</div>
 							<div className="inline-block text-right fs-14" style={{width: '40%'}}>
 								{

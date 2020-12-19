@@ -41,7 +41,7 @@ class App extends Component {
   }
   // Fetch Initial Set of Products from external API
   getProducts() {
-    // let hotel = this.props.match.hotelId || 'abhi';
+    // let hotel = this.props.match.hotelId || 'sahil';
     let url = "https://us-central1-easymenuspro.cloudfunctions.net/GetMenu";
     axios.post(url, { H_ID: localStorage.getItem('hotelId') }, {
 			headers: {
@@ -176,7 +176,7 @@ class App extends Component {
 
   render() {
     return (
-      <div>
+      <div className="container-fluid p-0 overflow-hidden">
         <Header
           cartBounce={this.state.cartBounce}
           total={this.state.totalAmount}
