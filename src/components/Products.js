@@ -41,7 +41,7 @@ class Products extends Component {
 	}
 
 	render() {
-		this.state.menus = this.props.productsList;
+		this.state.menus = this.props.productsList || [];
 		// let term = this.props.searchTerm;
 		const categories = this.state.menus.map((cat, index) => {
 			const listItems = cat.items.map((item) => {
@@ -89,12 +89,18 @@ class Products extends Component {
 					style={{justifyContent: 'center'}}
 					onSelect={(k) => this.setKey(k)}>
 					<Tab eventKey="menus" title="Our Menus">
+					{
+							this.state.activeTab === 'menus' &&
 						<div className="mt-10">{categories}</div>
+					}
 					</Tab>
 					<Tab eventKey="orders" title="Your Orders">
-						<Orders />
+						{
+							this.state.activeTab === 'orders' &&
+							<Orders />
+						}
 					</Tab>
-					</Tabs>
+				</Tabs>
 			</div>
 		);
 	}

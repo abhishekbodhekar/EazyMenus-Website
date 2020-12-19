@@ -15,8 +15,24 @@
     margin-top: 10px;
 }
 
+.mt-5 {
+    margin-top: 5px !important;
+}
+
+.fs-14 {
+    font-size: 14px;
+}
+
 .fs-20 {
     font-size: 20px;
+}
+
+.fs-24 {
+    font-size: 24px;
+}
+
+.font-large {
+    font-size: large;
 }
 
 .pull-right {
@@ -29,4 +45,8 @@
 
 .inline-block {
     display: inline-block !important;
+}
+
+.justify-flex-end {
+    justify-content: flex-end;
 }

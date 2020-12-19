@@ -1,0 +1,8 @@
+.orderlist-item {
+    padding: .5rem;
+    border-bottom: 1px solid #ddd;
+}
+
+div.orderlist-item:last-child {
+    border-bottom: none !important;
+}

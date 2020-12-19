@@ -28,7 +28,7 @@ class Header extends Component {
 
   placeOrder() {
 		let payload = {
-			"H_ID": "sahil",
+			"H_ID": "abhi",
 			"table_id": "2",
 			"order": this.state.cart
     };
@@ -38,7 +38,8 @@ class Header extends Component {
 			}
 		}).then((response) => {
 			this.setState({cart: []});
-			console.log(response, 'success resp');
+      alert('ORDER PLACED !');
+      this.props.clearCart();
 		}).catch((error) => {
 			console.error(error);
 		});
@@ -92,8 +93,8 @@ class Header extends Component {
             <p className="product-price">{product.price}</p>
           </div>
           <div className="product-info text-right">
-            <p className="product-name text-capitalize">
-              {product.quantity} {product.quantity > 1 ? "Nos." : "No."}{" "}
+            <p className="product-name">
+              x {product.quantity}
             </p>
             <p className="product-price">{product.quantity * product.price}</p>
           </div>
@@ -112,15 +113,17 @@ class Header extends Component {
       view = <EmptyCart />;
     } else {
       view = (
-        <CSSTransitionGroup
-          transitionName="fadeIn"
-          transitionEnterTimeout={500}
-          transitionLeaveTimeout={300}
-          component="ul"
-          className="cart-items"
-        >
-          {cartItems}
-        </CSSTransitionGroup>
+        <div>
+          <CSSTransitionGroup
+            transitionName="fadeIn"
+            transitionEnterTimeout={500}
+            transitionLeaveTimeout={300}
+            component="ul"
+            className="cart-items">
+            {cartItems}
+            <div className="text-right total p-10 fs-24">Total :&nbsp;<i className="fa fa-inr"></i>&nbsp;{this.props.total}</div>
+          </CSSTransitionGroup>
+        </div>
       );
     }
     return (

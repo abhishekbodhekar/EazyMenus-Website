@@ -1,16 +1,25 @@
 .menus-wrapper {
-    padding-top: 7.5rem;
+    padding-top: 10rem;
     animation: a .3s linear;
     animation-delay: .15s;
     /* background-color: #F5F5F5; */
     width: 100%;
+    position: fixed;
+}
+
+@media (max-width: 480px) {
+    .menus-wrapper {
+        padding-top: 6.5rem;
+   }
 }
 
 .category{
     cursor: pointer;
     border: solid 1px #f2f2f2;
     padding: 10px;
-    background-color: #0089CC;
+    /* background-color: #0089CC; */
+    background-image: linear-gradient(to right, royalblue , skyblue);
+    border-radius: 8px;
     color: #FFF;
     font-family: verdana;
 }
@@ -46,7 +55,7 @@
     text-decoration: none;
     color: orangered;
     font-size: 24px;
-    line-height: 20px;
+    line-height: 22px;
     -moz-user-select: none;
     -webkit-user-select: none;
 }
@@ -61,7 +70,7 @@
     text-decoration: none;
     color: green;
     font-size: 24px;
-    line-height: 20px;
+    line-height: 22px;
     -moz-user-select: none;
     -webkit-user-select: none;
 }
@@ -90,6 +99,8 @@
     font-weight: bold;
     padding: 5px 5px 5px 5px;
     border-bottom: 1px solid #ddd;
+    background-image: linear-gradient(to bottom, #eee, transparent);
+    border-radius: 5px;
 }
 .itemDescription {
     font-size: 14px;

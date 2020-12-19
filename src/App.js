@@ -9,6 +9,7 @@ import "./css/footer.css";
 import "./css/modal.css";
 import "./css/style.css";
 import "./css/menu.css";
+import "./css/orders.css";
 
 class App extends Component {
   constructor() {
@@ -34,6 +35,7 @@ class App extends Component {
     this.checkProduct = this.checkProduct.bind(this);
     this.updateQuantity = this.updateQuantity.bind(this);
     this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
+    this.handleClearCart = this.handleClearCart.bind(this);
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
   }
@@ -41,11 +43,11 @@ class App extends Component {
   getProducts() {
     // let hotel = this.props.match.hotelId || 'abhi';
     let url = "https://us-central1-easymenuspro.cloudfunctions.net/GetMenu";
-    axios.post(url, { H_ID: 'abhi' }, {
-      headers: {
-        'Content-Type': 'text/plain'
-      }
-    }).then(response => {
+    axios.post(url, { H_ID: localStorage.getItem('hotelId') }, {
+			headers: {
+				'Content-Type': 'text/plain'
+			}
+		}).then(response => {
       this.setState({
         products: response.data.Data.menu
       });
@@ -53,6 +55,8 @@ class App extends Component {
 
   }
   componentWillMount() {
+    localStorage.setItem('tableId', "1");
+    localStorage.setItem('hotelId', "sahilk");
       this.getProducts();
   }
 
@@ -83,17 +87,17 @@ class App extends Component {
         cart
       });
     } else {
-		cart.push(selectedProduct);
-	}
-	this.setState({
-		cart: cart,
-		cartBounce: true
-	  });
-	  setTimeout(function () {
-		  this.setState({
-			cartBounce: false
-		  });
-		}.bind(this), 1000);
+      cart.push(selectedProduct);
+    }
+    this.setState({
+      cart: cart,
+      cartBounce: true
+      });
+      setTimeout(function () {
+        this.setState({
+        cartBounce: false
+        });
+      }.bind(this), 1000);
     this.sumTotalItems(this.state.cart);
     this.sumTotalAmount(this.state.cart);
   }
@@ -123,6 +127,12 @@ class App extends Component {
     this.sumTotalItems(this.state.cart);
     this.sumTotalAmount(this.state.cart);
     e.preventDefault();
+  }
+
+  handleClearCart() {
+    this.setState({cart: []});
+    this.sumTotalItems(this.state.cart);
+    this.sumTotalAmount(this.state.cart);
   }
 
   sumTotalItems() {
@@ -173,6 +183,7 @@ class App extends Component {
           totalItems={this.state.totalItems}
           cartItems={this.state.cart}
           removeProduct={this.handleRemoveProduct}
+          clearCart={this.handleClearCart}
           handleSearch={this.handleSearch}
           handleMobileSearch={this.handleMobileSearch}
           handleCategory={this.handleCategory}
