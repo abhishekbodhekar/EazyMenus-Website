@@ -14,6 +14,8 @@ jobs:
       uses: actions/setup-node@v1
       env: 
         CI: false
+    - run: CI=false
+    - run: process.env.CI=false
     - run: npm install
     - run: npm run build    
     - run: ls
