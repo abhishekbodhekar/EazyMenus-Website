@@ -2,9 +2,6 @@ import React, { Component } from "react";
 import { findDOMNode } from "react-dom";
 
 class QuickView extends Component {
-  constructor(props) {
-    super(props);
-  }
   componentDidMount() {
     document.addEventListener(
       "click",

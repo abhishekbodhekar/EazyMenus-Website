@@ -1,5 +1,5 @@
 header {
-  background-image: linear-gradient(to right, royalblue , skyblue);
+  background-image: linear-gradient(to bottom, #e66465 10%, white);
   padding: 30px 32px;
   box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.033);
   position: fixed;
@@ -7,6 +7,7 @@ header {
   width: 100%;
   z-index: 100;
   animation: slideUp 300ms linear;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 header .container {
   display: flex;
@@ -28,8 +29,8 @@ header .container {
     padding: 8px 12px;
  }
 } */
-.blue-gradient {
-  background-image: linear-gradient(to right, #7192f7 , skyblue);
+.red-gradient {
+  background-image: linear-gradient(to right, #e66465 10%, transparent);
 }
 @keyframes slideUp {
   0% {
@@ -164,7 +165,6 @@ header .container {
 }
 .cart-info table {
   font-size: 14px;
-  color: #FFC107;
   text-align: right;
 }
 .cart-info table tr {
@@ -176,12 +176,11 @@ header .container {
   line-height: 16px;
 }
 .cart-icon {
-  margin-left: 16px;
+  margin-left: .8rem;
   z-index: 99;
   position: relative;
   color: #FFC107;
   font-size: 28px;
-  top: -3px;
 }
 @media (min-width: 992px) {
   .cart-count {
@@ -192,7 +191,8 @@ header .container {
   .cart-count {
     display: block;
     position: absolute;
-    background: #FFC107;
+    /* background: #FFC107; */
+    background: #000;
     height: 24px;
     line-height: 24px;
     text-align: center;
@@ -314,13 +314,14 @@ header .container {
 }
 .cart-item .product-info .product-name {
   color: black;
-  font-size: 16px;
+  font-size: 14px;
   margin-bottom: .2rem !important;
 }
 .cart-item .product-info .product-price {
   color: gray;
   font-weight: 700;
   margin-bottom: .2rem !important;
+  font-size: 14px;
 }
 .cart-item .product-info .product-price:before {
   content: "₹ ";
@@ -347,7 +348,7 @@ header .container {
   height: 24px;
   line-height: 24px;
   width: 24px;
-  font-size: 22px;
+  font-size: 20px;
   color: gray;
   text-align: center;
 }

@@ -4,6 +4,7 @@
     /* background-color: #F5F5F5; */
     width: 100%;
     animation: slideUp 300ms linear;
+    font-family: verdana;
 }
 
 @media (max-width: 480px) {
@@ -16,11 +17,8 @@
     cursor: pointer;
     border: solid 1px #f2f2f2;
     padding: 10px;
-    /* background-color: #0089CC; */
-    background-image: linear-gradient(to right, #7192f7 , skyblue);
-    border-radius: 8px;
-    color: #FFF;
-    font-family: verdana;
+    background-image: linear-gradient(to right, #f9d5d6 10%, transparent);
+    color: #000;
 }
 
 .category-content{
@@ -28,9 +26,7 @@
     border-left: solid 1px #f2f2f2;
     border-right: solid 1px #f2f2f2;
     border-bottom: solid 1px #f2f2f2;
-    border-radius: 0 0 5px 5px;
     padding: 15px;
-    font-family: verdana;
     font-size: 14px;
     transition: padding 1s ease-in;
 }
@@ -39,48 +35,64 @@
     display: flex;
     display: -webkit-flex;
     color: grey;
-    /* max-width: 120px; */
     justify-content: flex-end;
     margin: 0 auto;
 }
 
+.menu-item {
+    padding: 5px 5px 5px 5px;
+    border-bottom: 1px solid #ddd;
+    /* background-image: linear-gradient(to bottom, #eee, transparent); */
+    vertical-align: top;
+    font-size: 16px;
+}
+.itemDescription {
+    font-size: 13px;
+    font-weight: normal;
+}
+
 .stepper-input .decrement {
-    height: 24px;
-    width: 24px;
-    border: 1px solid gray;
+    border-radius: 50px;
+    padding: 3px 4px;
+    height: 22px;
+    width: 22px;
+    border: 1px solid black;
+    color: orangered;
     text-align: center;
     box-sizing: border-box;
-    border-radius: 50%;
-    text-decoration: none;
-    color: orangered;
-    font-size: 24px;
-    line-height: 22px;
-    -moz-user-select: none;
-    -webkit-user-select: none;
+    line-height: 12px;
+    font-size: 14px;
 }
 
 .stepper-input .increment {
-    height: 24px;
-    width: 24px;
-    border: 1px solid gray;
+    border-radius: 50px;
+    padding: 3px 4px;
+    height: 22px;
+    width: 22px;
+    border: 1px solid black;
+    color: green;
     text-align: center;
     box-sizing: border-box;
-    border-radius: 50%;
-    text-decoration: none;
-    color: green;
-    font-size: 24px;
-    line-height: 22px;
-    -moz-user-select: none;
-    -webkit-user-select: none;
+    line-height: 12px;
+    font-size: 14px;
 }
-.stepper-input .increment:hover, .stepper-input .decrement:hover {
+.stepper-input .increment:hover{
     color: green;
     border-color: green;
 }
-.stepper-input .increment:active, .stepper-input .decrement:active {
+.stepper-input .decrement:hover {
+    color: orangered;
+    border-color: orangered;
+}
+.stepper-input .increment:active {
     color: white;
     border-color: green;
     background: #00cd00;
+}
+.stepper-input .decrement:active {
+    color: white;
+    border-color: orangered;
+    background: orange;
 }
 .stepper-input .quantity {
     height: 24px;
@@ -93,15 +105,4 @@
 .stepper-input .quantity:focus {
     outline: none;
     border-color: green;
-}
-.menu-item {
-    font-weight: bold;
-    padding: 5px 5px 5px 5px;
-    border-bottom: 1px solid #ddd;
-    background-image: linear-gradient(to bottom, #eee, transparent);
-    border-radius: 5px;
-}
-.itemDescription {
-    font-size: 14px;
-    font-weight: normal;
 }
