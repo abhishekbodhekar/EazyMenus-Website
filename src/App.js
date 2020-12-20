@@ -14,7 +14,7 @@ class App extends Component {
       <div>
         { /* Route components are rendered if the path prop matches the current URL */}
         <Switch>
-          <Route exact path="/" component={Home}/>
+          <Route exact path="/" component={Home} />
         </Switch>
       </div>
     );
