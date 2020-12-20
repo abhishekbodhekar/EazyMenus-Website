@@ -42,9 +42,9 @@ class App extends Component {
   }
   // Fetch Initial Set of Products from external API
   getProducts() {
-    // let hotel = this.props.match.hotelId || 'sahil';
+    
     let url = "https://us-central1-easymenuspro.cloudfunctions.net/GetMenu";
-    axios.post(url, { H_ID: localStorage.getItem('hotelId') }, {
+    axios.post(url, { H_ID: 'hotelujwal' }, {
 			headers: {
 				'Content-Type': 'text/plain'
 			}
