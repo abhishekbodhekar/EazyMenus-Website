@@ -133,10 +133,7 @@ class Products extends Component {
 			menus: props.productsList,
 			hotelInfo: props.hotelInfo
 		}, function () {
-			// let favs = this.state.menus.some((menu) => {
-			// 	return menu.category === 'Favorites';
-			// });
-			// if (!favs) this.addFavoritesCategory();
+			this.addFavoritesCategory();
 		});
 	}
 

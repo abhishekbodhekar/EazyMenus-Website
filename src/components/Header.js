@@ -84,6 +84,9 @@ class Header extends Component {
 			true
 		);
 	}
+	componentWillReceiveProps(props) {
+		this.setState({ cart: props.cartItems });
+	}
 	componentWillUnmount() {
 		document.removeEventListener(
 			"click",
