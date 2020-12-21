@@ -1,0 +1,30 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Use Node.js
+      uses: actions/setup-node@v1
+      env: 
+        CI: false
+    - run: CI=false
+    - run: npm install
+    - run: CI=false npm run build   
+    - run: ls
+    - run: mv firebase-master.json firebase.json
+    - run: mv firebase-develop.json firebase-develop.jsonn
+    - run: ls
+    - name: Deploy to Firebase
+      uses: w9jds/firebase-action@master
+      with:
+        args: deploy --only hosting
+      env:
+          FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
+
