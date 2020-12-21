@@ -3,7 +3,7 @@ name: Build
 on:
   push:
     branches:
-      - master
+      - develop
 
 jobs:
   Build:
@@ -18,16 +18,13 @@ jobs:
     - run: npm install
     - run: CI=false npm run build   
     - run: ls
+    - run: mv firebase-develop.json firebase.json
+    - run: mv firebase-master.json firebase-master.jsonn
+    - run: ls
     - name: Deploy to Firebase
       uses: w9jds/firebase-action@master
       with:
         args: deploy --only hosting
       env:
           FIREBASE_TOKEN: ${{ secrets.FIREBASE_TOKEN }}
-
-
-
-
-
-
 

@@ -1,0 +1,7 @@
+{
+  "hosting": {
+    "public": "build",
+    "site": "test-fudoz",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+  }
+}
