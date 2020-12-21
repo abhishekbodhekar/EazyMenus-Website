@@ -3,7 +3,7 @@ import axios from "axios";
 import Header from "./Header";
 import Products from "./Products";
 import SplashScreen from './SplashScreen';
-import { getItem, setItem } from '../lib/myStore';
+import { getItem, setItem, removeAll, removeItem } from '../lib/myStore';
 // import {Toast} from '../lib/toastr';
 
 class Home extends Component {
@@ -58,6 +58,7 @@ class Home extends Component {
   }
 
   searchToObject() {
+    if (!window.location.search) return {};
     var pairs = window.location.search.substring(1).split("&"),
       obj = {},
       pair,
@@ -75,9 +76,14 @@ class Home extends Component {
 
   componentWillMount() {
     let params = this.searchToObject();
-    setItem('tableId', params.table_id);
+    if (params.table_id) setItem('tableId', params.table_id);
+    else removeItem('tableId');
     setItem('hotelId', params.hotel_id);
     this.getMenus();
+  }
+
+  componentWillUnmount() {
+    removeAll();
   }
 
   // Search by Keyword

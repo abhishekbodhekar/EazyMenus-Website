@@ -8,6 +8,7 @@ import InputGroup from 'react-bootstrap/InputGroup';
 import FormControl from 'react-bootstrap/FormControl';
 import axios from 'axios';
 import { getItem } from '../lib/myStore';
+import { startLoader, stopLoader } from '../lib/utils';
 
 class Header extends Component {
 	constructor(props) {
@@ -32,6 +33,7 @@ class Header extends Component {
 
 	placeOrder() {
 		if (!this.state.cart.length) return false;
+		startLoader();
 		let payload = {
 			"H_ID": getItem('hotelId'),
 			"table_id": getItem('tableId'),
@@ -45,8 +47,10 @@ class Header extends Component {
 			this.setState({ cart: [] });
 			alert('ORDER PLACED !');
 			this.props.clearCart();
+			stopLoader();
 		}).catch((error) => {
 			console.error(error);
+			stopLoader();
 		});
 	}
 

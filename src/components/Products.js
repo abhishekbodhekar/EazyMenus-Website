@@ -110,7 +110,7 @@ class Products extends Component {
 				});
 			} else {
 				let index = this.state.menus.findIndex((menu) => menu.category === 'Favorites');
-				this.state.menus.splice(index, 1);
+				if (index >= 0) this.state.menus.splice(index, 1);
 				this.setState({
 					menus: this.state.menus
 				});
@@ -133,10 +133,10 @@ class Products extends Component {
 			menus: props.productsList,
 			hotelInfo: props.hotelInfo
 		}, function () {
-			let favs = this.state.menus.some((menu) => {
-				return menu.category === 'Favorites';
-			});
-			if (!favs) this.addFavoritesCategory();
+			// let favs = this.state.menus.some((menu) => {
+			// 	return menu.category === 'Favorites';
+			// });
+			// if (!favs) this.addFavoritesCategory();
 		});
 	}
 
