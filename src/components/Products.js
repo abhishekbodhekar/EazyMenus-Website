@@ -14,7 +14,8 @@ class Products extends Component {
 			menus: [],
 			activeTab: 'menus',
 			hotelInfo: {},
-			isOrderEnabled: getItem('isOrderEnabled')
+			isOrderEnabled: getItem('isOrderEnabled'),
+			newOrderPlaced: false
 		};
 	}
 	togglePanel(e, $index) {
@@ -123,7 +124,8 @@ class Products extends Component {
 	componentDidMount() {
 		this.setState({
 			menus: this.props.productsList,
-			hotelInfo: this.props.hotelInfo
+			hotelInfo: this.props.hotelInfo,
+			newOrderPlaced: this.props.newOrderPlaced
 		});
 		this.addFavoritesCategory();
 	}
@@ -131,8 +133,14 @@ class Products extends Component {
 	componentWillReceiveProps(props) {
 		this.setState({
 			menus: props.productsList,
-			hotelInfo: props.hotelInfo
+			hotelInfo: props.hotelInfo,
+			newOrderPlaced: this.props.newOrderPlaced
 		}, function () {
+			if (this.state.newOrderPlaced === true) {
+				this.setKey('orders');
+				this.props.updateNewOrderPlaced({ newOrderPlaced: false });
+				this.setState({ newOrderPlaced: false });
+			}
 			this.addFavoritesCategory();
 		});
 	}
@@ -151,24 +159,26 @@ class Products extends Component {
 							</div>
 							<div className="inline-block text-right" style={{ width: '25%' }}>
 								<span className="fs-20"><i className="fa fa-inr"></i> {item.price}</span>
-								<span>
-									<div className="stepper-input">
-										{/* <a href="#" className="decrement" onClick={this.decrement.bind(this, item)}> – </a> */}
-										<span className={this.state.isOrderEnabled == '0' ? "decrement disabled" : "decrement"} role="button">
-											<i className="fa fa-minus color-black f4s-15 vertical-align-top m-t-2 m-b-2" onClick={this.decrement.bind(this, item)}>
-											</i>
-										</span>
-										<input
-											type="number"
-											className={this.state.isOrderEnabled == '0' ? "quantity disabled" : "quantity"}
-											value={item.quantity}
-											onChange={this.feed.bind(this, item)} />
-										<span className={this.state.isOrderEnabled == '0' ? "increment disabled" : "increment"} role="button">
-											<i className="fa fa-plus color-black f4s-15 vertical-align-top m-t-2 m-b-2" onClick={this.increment.bind(this, item)}>
-											</i>
-										</span>
-									</div>
-								</span>
+								{
+									this.state.isOrderEnabled == '1' &&
+									<span>
+										<div className="stepper-input">
+											<span className="decrement" role="button">
+												<i className="fa fa-minus color-black f4s-15 vertical-align-top m-t-2 m-b-2" onClick={this.decrement.bind(this, item)}>
+												</i>
+											</span>
+											<input
+												type="number"
+												className={this.state.isOrderEnabled == '0' ? "quantity disabled" : "quantity"}
+												value={item.quantity}
+												onChange={this.feed.bind(this, item)} />
+											<span className="increment" role="button">
+												<i className="fa fa-plus color-black f4s-15 vertical-align-top m-t-2 m-b-2" onClick={this.increment.bind(this, item)}>
+												</i>
+											</span>
+										</div>
+									</span>
+								}
 							</div>
 						</div>
 					</div>
@@ -193,7 +203,7 @@ class Products extends Component {
 			</div>)
 		});
 		return (
-			<div className="menus-wrapper">
+			<div>
 				<div className="brand">
 					<img
 						className="logo"
@@ -218,12 +228,15 @@ class Products extends Component {
 								(<div className="p-10 text-center"><h4>No menus to display</h4></div>)
 						}
 					</Tab>
-					<Tab eventKey="orders" title="Your Orders" disabled={this.state.isOrderEnabled == '0'}>
-						{
-							this.state.activeTab === 'orders' &&
-							<Orders />
-						}
-					</Tab>
+					{
+						this.state.isOrderEnabled == '1' &&
+						<Tab eventKey="orders" title="Your Orders" disabled={this.state.isOrderEnabled == '0'}>
+							{
+								this.state.activeTab === 'orders' &&
+								<Orders />
+							}
+						</Tab>
+					}
 				</Tabs>
 			</div>
 		);

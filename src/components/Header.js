@@ -4,8 +4,8 @@ import CartScrollBar from "./CartScrollBar";
 import EmptyCart from "../empty-states/EmptyCart";
 import CSSTransitionGroup from "react-transition-group/CSSTransitionGroup";
 import Button from 'react-bootstrap/Button';
-import InputGroup from 'react-bootstrap/InputGroup';
-import FormControl from 'react-bootstrap/FormControl';
+// import InputGroup from 'react-bootstrap/InputGroup';
+// import FormControl from 'react-bootstrap/FormControl';
 import axios from 'axios';
 import { getItem } from '../lib/myStore';
 import { startLoader, stopLoader } from '../lib/utils';
@@ -46,7 +46,7 @@ class Header extends Component {
 		}).then((response) => {
 			this.setState({ cart: [] });
 			alert('ORDER PLACED !');
-			this.props.clearCart();
+			this.props.orderPlaced();
 			stopLoader();
 		}).catch((error) => {
 			console.error(error);
@@ -113,10 +113,7 @@ class Header extends Component {
 					<a
 						className="product-remove"
 						href=""
-						onClick={this.props.removeProduct.bind(this, product.name)}
-					>
-						×
-          </a>
+						onClick={this.props.removeProduct.bind(this, product.name)}>×</a>
 				</li>
 			);
 		});
@@ -141,43 +138,16 @@ class Header extends Component {
 		return (
 			<header>
 				<div className="container">
-					<div className="search">
-						{/* <a
-              className="mobile-search"
-              href="#"
-              onClick={this.handleMobileSearch.bind(this)}>
-              <i className="fa fa-search"></i>
-            </a>
-            <form
-              action="#"
-              method="get"
-              className={
-                this.state.mobileSearch ? "search-form active" : "search-form"
-              }>
-              <a
-                className="back-button"
-                href="#"
-                onClick={this.handleSearchNav.bind(this)}>
-                <i className="fa fa-arrow-left"></i>
-              </a>
-              <input
-                type="search"
-                value={this.state.searchBox}
-                placeholder="Search for Dish"
-                className="search-keyword"
-                onChange={this.props.handleSearch}
-              />
-              <Button className="search-button" variant="warning" onClick={this.handleSubmit.bind(this)}></Button>
-            </form> */}
+					{/* <div className="search">
 						<InputGroup size="sm">
 							<FormControl placeholder="Search for Dish..." aria-label="Small" className="fs-13" aria-describedby="inputGroup-sizing-sm" />
 							<InputGroup.Append>
-								<InputGroup.Text id="inputGroup-sizing-sm" className="p-0 bg-primary">
+								<InputGroup.Text id="inputGroup-sizing-sm" className="p-0 bg-danger">
 									<Button className="fa fa-search text-white" variant="default" onClick={this.handleSubmit.bind(this)}></Button>
 								</InputGroup.Text>
 							</InputGroup.Append>
 						</InputGroup>
-					</div>
+					</div> */}
 
 					<div className="cart">
 						<div className="cart-info">
@@ -205,7 +175,7 @@ class Header extends Component {
 							href="#"
 							onClick={this.handleCart.bind(this)}
 						>
-							<Button variant="primary" disabled={this.state.isOrderEnabled == '0'} className="fs-12 vertical-align-top">Place Order</Button>
+							<Button variant="danger" disabled={this.state.isOrderEnabled == '0'} className="fs-12 vertical-align-top">Place Order</Button>
 							{this.props.totalItems ? (
 								<span className="cart-count">{this.props.totalItems}</span>
 							) : (

@@ -1,5 +1,6 @@
 header {
-  background-image: linear-gradient(to bottom, #e66465 10%, white);
+  /* background-image: linear-gradient(to bottom, #e66465 10%, white); */
+  background-image: linear-gradient(to right, #7192f7 20%, skyblue);
   padding: 30px 32px;
   box-shadow: 0px 8px 18px rgba(0, 0, 0, 0.033);
   position: fixed;
@@ -176,7 +177,7 @@ header .container {
   line-height: 16px;
 }
 .cart-icon {
-  margin-left: .8rem;
+  margin-left: 13.5rem;
   z-index: 99;
   position: relative;
   color: #FFC107;
