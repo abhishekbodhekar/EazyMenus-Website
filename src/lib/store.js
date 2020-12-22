@@ -1,14 +1,14 @@
 export class AppStore {
     static get(key) {
-        return JSON.parse(window.localStorage.getItem(key) || '{}');
+        return JSON.parse(window.sessionStorage.getItem(key) || '{}');
     }
     static set(key, value) {
-        window.localStorage.setItem(key, JSON.stringify(value));
+        window.sessionStorage.setItem(key, JSON.stringify(value));
     }
     static remove(key) {
-        window.localStorage && window.localStorage.removeItem(key);
+        window.sessionStorage && window.sessionStorage.removeItem(key);
     }
     static removeAll() {
-        window.localStorage && window.localStorage.clear();
+        window.sessionStorage && window.sessionStorage.clear();
     }
 }

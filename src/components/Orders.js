@@ -136,7 +136,7 @@ class Orders extends Component {
 							<div className="inline-block text-right fs-14" style={{ width: '40%' }}>
 								{
 									order.status.toUpperCase() === 'CONFIRMED' &&
-									<span>
+									<span className="text-danger">
 										Confirmed! &nbsp;
 											<i className="fa fa-check-circle-o text-success"></i>
 									</span>
@@ -158,6 +158,13 @@ class Orders extends Component {
 		});
 		return (
 			<div className="container">
+				<div className="row mt-5">
+					<div className="col-md-12 text-right">
+						<Button variant="danger" size="sm" onClick={this.getOrders.bind(this)} style={{ marginRight: '13px' }}>
+							<i className="fa fa-refresh"></i>
+						</Button>
+					</div>
+				</div>
 				<div className="row">
 					<div className="col-md-12" style={{ padding: '0 .5rem 0 .5rem' }}>
 						{this.state.orders.length > 0 && orders}

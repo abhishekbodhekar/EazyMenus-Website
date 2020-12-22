@@ -21,7 +21,9 @@ class Home extends Component {
 			quickViewProduct: {},
 			modalActive: false,
 			hotelInfo: {},
-			renderSplashscreen: true
+			renderSplashscreen: true,
+			newOrderPlaced: false,
+			isOrderEnabled: '0'
 		};
 		this.handleSearch = this.handleSearch.bind(this);
 		this.handleMobileSearch = this.handleMobileSearch.bind(this);
@@ -32,7 +34,8 @@ class Home extends Component {
 		this.checkProduct = this.checkProduct.bind(this);
 		this.updateQuantity = this.updateQuantity.bind(this);
 		this.handleRemoveProduct = this.handleRemoveProduct.bind(this);
-		this.handleClearCart = this.handleClearCart.bind(this);
+		this.handleOrderPlacedAfter = this.handleOrderPlacedAfter.bind(this);
+		this.updateNewOrderPlaced = this.updateNewOrderPlaced.bind(this);
 		this.openModal = this.openModal.bind(this);
 		this.closeModal = this.closeModal.bind(this);
 	}
@@ -51,7 +54,7 @@ class Home extends Component {
 					hotel_name: response.data.Data.hotel_name,
 					hotel_logo_link: response.data.Data.logoLink
 				},
-				renderSplashscreen: false
+				isOrderEnabled: response.data.Data.isOrderEnabled
 			});
 			setItem('isOrderEnabled', response.data.Data.isOrderEnabled);
 		});
@@ -81,6 +84,9 @@ class Home extends Component {
 		else removeItem('tableId');
 		setItem('hotelId', params.hotel_id);
 		this.getMenus();
+		setTimeout(function () {
+			this.setState({ renderSplashscreen: false });
+		}.bind(this), 2000);
 	}
 
 	componentWillUnmount() {
@@ -152,11 +158,15 @@ class Home extends Component {
 		e.preventDefault();
 	}
 
-	handleClearCart() {
-		this.setState({ cart: [] });
+	handleOrderPlacedAfter() {
+		this.setState({ cart: [], newOrderPlaced: true });
 		this.sumTotalItems(this.state.cart);
 		this.sumTotalAmount(this.state.cart);
 		this.getMenus();
+	}
+
+	updateNewOrderPlaced(data) {
+		this.setState({ newOrderPlaced: data.newOrderPlaced });
 	}
 
 	sumTotalItems() {
@@ -204,29 +214,36 @@ class Home extends Component {
 		} else {
 			return (
 				<div className="container-fluid p-0 overflow-hidden">
-					<Header
-						cartBounce={this.state.cartBounce}
-						total={this.state.totalAmount}
-						totalItems={this.state.totalItems}
-						cartItems={this.state.cart}
-						removeProduct={this.handleRemoveProduct}
-						clearCart={this.handleClearCart}
-						handleSearch={this.handleSearch}
-						handleMobileSearch={this.handleMobileSearch}
-						handleCategory={this.handleCategory}
-						categoryTerm={this.state.category}
-						updateQuantity={this.updateQuantity}
-						productQuantity={this.state.moq}
-					/>
-					<Products
-						productsList={this.state.products}
-						searchTerm={this.state.term}
-						addToCart={this.handleAddToCart}
-						productQuantity={this.state.quantity}
-						updateQuantity={this.updateQuantity}
-						openModal={this.openModal}
-						hotelInfo={this.state.hotelInfo}
-					/>
+					{
+						this.state.isOrderEnabled == '1' &&
+						<Header
+							cartBounce={this.state.cartBounce}
+							total={this.state.totalAmount}
+							totalItems={this.state.totalItems}
+							cartItems={this.state.cart}
+							removeProduct={this.handleRemoveProduct}
+							orderPlaced={this.handleOrderPlacedAfter}
+							handleSearch={this.handleSearch}
+							handleMobileSearch={this.handleMobileSearch}
+							handleCategory={this.handleCategory}
+							categoryTerm={this.state.category}
+							updateQuantity={this.updateQuantity}
+							productQuantity={this.state.moq}
+						/>
+					}
+					<div className={this.state.isOrderEnabled == '0' ? 'mt-10' : 'menus-wrapper'}>
+						<Products
+							productsList={this.state.products}
+							searchTerm={this.state.term}
+							addToCart={this.handleAddToCart}
+							updateNewOrderPlaced={this.updateNewOrderPlaced}
+							productQuantity={this.state.quantity}
+							updateQuantity={this.updateQuantity}
+							openModal={this.openModal}
+							hotelInfo={this.state.hotelInfo}
+							newOrderPlaced={this.state.newOrderPlaced}
+						/>
+					</div>
 					{/* <Footer /> */}
 				</div>
 			);
