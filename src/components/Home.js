@@ -214,24 +214,21 @@ class Home extends Component {
 		} else {
 			return (
 				<div className="container-fluid p-0 overflow-hidden">
-					{
-						this.state.isOrderEnabled == '1' &&
-						<Header
-							cartBounce={this.state.cartBounce}
-							total={this.state.totalAmount}
-							totalItems={this.state.totalItems}
-							cartItems={this.state.cart}
-							removeProduct={this.handleRemoveProduct}
-							orderPlaced={this.handleOrderPlacedAfter}
-							handleSearch={this.handleSearch}
-							handleMobileSearch={this.handleMobileSearch}
-							handleCategory={this.handleCategory}
-							categoryTerm={this.state.category}
-							updateQuantity={this.updateQuantity}
-							productQuantity={this.state.moq}
-						/>
-					}
-					<div className={this.state.isOrderEnabled == '0' ? 'mt-10' : 'menus-wrapper'}>
+					<Header
+						cartBounce={this.state.cartBounce}
+						total={this.state.totalAmount}
+						totalItems={this.state.totalItems}
+						cartItems={this.state.cart}
+						removeProduct={this.handleRemoveProduct}
+						orderPlaced={this.handleOrderPlacedAfter}
+						handleSearch={this.handleSearch}
+						handleMobileSearch={this.handleMobileSearch}
+						handleCategory={this.handleCategory}
+						categoryTerm={this.state.category}
+						updateQuantity={this.updateQuantity}
+						productQuantity={this.state.moq}
+					/>
+					<div className='mt-10 menus-wrapper'>
 						<Products
 							productsList={this.state.products}
 							searchTerm={this.state.term}

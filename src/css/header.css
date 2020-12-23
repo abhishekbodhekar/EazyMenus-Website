@@ -177,11 +177,12 @@ header .container {
   line-height: 16px;
 }
 .cart-icon {
-  margin-left: 13.5rem;
+  margin-left: 4.2rem;
   z-index: 99;
   position: relative;
-  color: #FFC107;
+  /* color: #FFC107; */
   font-size: 28px;
+  top: .6rem;
 }
 @media (min-width: 992px) {
   .cart-count {

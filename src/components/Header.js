@@ -9,6 +9,7 @@ import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import { getItem } from '../lib/myStore';
 import { startLoader, stopLoader } from '../lib/utils';
+import fudozLogo from '../assets/img/fudoz.jpeg';
 
 class Header extends Component {
 	constructor(props) {
@@ -148,51 +149,59 @@ class Header extends Component {
 							</InputGroup.Append>
 						</InputGroup>
 					</div> */}
+					<div className={this.state.isOrderEnabled == '0' ? 'inline-block text-left' : 'inline-block text-left'} style={{ width: '50%' }}>
+						<img src={fudozLogo} alt="fudoz logo" style={{ height: '55px', marginLeft: '1rem' }}></img>
+					</div>
 
-					<div className="cart">
-						<div className="cart-info">
-							<table>
-								<tbody>
-									<tr>
-										<td>No. of items</td>
-										<td>:</td>
-										<td>
-											<strong>{this.props.totalItems}</strong>
-										</td>
-									</tr>
-									<tr>
-										<td>Sub Total</td>
-										<td>:</td>
-										<td>
-											<strong>{this.props.total}</strong>
-										</td>
-									</tr>
-								</tbody>
-							</table>
-						</div>
-						<a
-							className="cart-icon"
-							href="#"
-							onClick={this.handleCart.bind(this)}
-						>
-							<Button variant="danger" disabled={this.state.isOrderEnabled == '0'} className="fs-12 vertical-align-top">Place Order</Button>
-							{this.props.totalItems ? (
-								<span className="cart-count">{this.props.totalItems}</span>
-							) : (
-									""
-								)}
-						</a>
-						<div
-							className={
-								this.state.showCart ? "cart-preview active" : "cart-preview"
-							}
-						>
-							<CartScrollBar>{view}</CartScrollBar>
-							<div className="action-block">
-								<Button variant="warning" disabled={this.state.cart.length <= 0 ? true : false} onClick={this.placeOrder.bind(this)}>PLACE ORDER</Button>
+					{
+						this.state.isOrderEnabled == '1' &&
+						<div className="inline-block" style={{ width: '50%' }}>
+							<div className="cart">
+								<div className="cart-info">
+									<table>
+										<tbody>
+											<tr>
+												<td>No. of items</td>
+												<td>:</td>
+												<td>
+													<strong>{this.props.totalItems}</strong>
+												</td>
+											</tr>
+											<tr>
+												<td>Sub Total</td>
+												<td>:</td>
+												<td>
+													<strong>{this.props.total}</strong>
+												</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+								<a
+									className="cart-icon"
+									href="#"
+									onClick={this.handleCart.bind(this)}
+								>
+									<Button variant="warning" disabled={this.state.isOrderEnabled == '0'} className="fs-12 vertical-align-top">Place Order</Button>
+									{this.props.totalItems ? (
+										<span className="cart-count">{this.props.totalItems}</span>
+									) : (
+											""
+										)}
+								</a>
+								<div
+									className={
+										this.state.showCart ? "cart-preview active" : "cart-preview"
+									}
+								>
+									<CartScrollBar>{view}</CartScrollBar>
+									<div className="action-block">
+										<Button variant="warning" disabled={this.state.cart.length <= 0 ? true : false} onClick={this.placeOrder.bind(this)}>PLACE ORDER</Button>
+									</div>
+								</div>
 							</div>
 						</div>
-					</div>
+					}
 				</div>
 			</header>
 		);
