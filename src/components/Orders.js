@@ -38,7 +38,7 @@ class Orders extends Component {
 					orders: myOrders || []
 				});
 			}
-			// stopLoader();
+			stopLoader();
 		}).catch(error => {
 			console.error(error);
 			stopLoader();
