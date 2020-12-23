@@ -150,7 +150,7 @@ class Header extends Component {
 						</InputGroup>
 					</div> */}
 					<div className={this.state.isOrderEnabled == '0' ? 'inline-block text-left' : 'inline-block text-left'} style={{ width: '50%' }}>
-						<img src={fudozLogo} alt="fudoz logo" style={{ height: '55px', marginLeft: '1rem' }}></img>
+						<img src={fudozLogo} alt="fudoz logo" style={{ height: '55px' }}></img>
 					</div>
 
 					{
