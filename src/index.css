@@ -31,7 +31,7 @@ code {
   display: none;
 }
 
-.loader:before {
+/* .loader:before {
   content: "";
   display: block;
   position: absolute;
@@ -46,9 +46,9 @@ code {
   transform: scale(10,10);
   opacity: 0;
   transition: transform .5s,opacity 1s;
-}
+} */
 
-.loader.is-loading:after {
+/* .loader.is-loading:after {
   animation: spinAround 2000ms infinite linear;
   border: 3px solid color-primary;
   border-radius: 290486px;
@@ -61,9 +61,9 @@ code {
   left: calc(50% - (1em/2));
   top: calc(50% - (1em/2));
   position: absolute !important;
-}
+} */
 
-@keyframes spinAround {
+/* @keyframes spinAround {
   0% {
     transform: perspective(120px) rotateX(0deg) rotateY(0deg);
     -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg);
@@ -74,7 +74,7 @@ code {
     transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
     -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
     }
-}
+} */
 
 .spinner {
   position: absolute;
