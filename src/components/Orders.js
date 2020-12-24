@@ -128,12 +128,11 @@ class Orders extends Component {
 			return (
 				<div className="mt-5" key={order.id}>
 					<Card className="shadow">
-						<Card.Header as="h5">
-							<div className="inline-block" style={{ width: '60%' }}>
-								Order {orderIndex + 1}
-								<span className="ml-10 fs-14">({moment(order.timestamp).format('hh:mm A')})</span>
+						<Card.Header as="h6">
+							<div className="inline-block" style={{ width: '65%' }}>
+								Ordered on {moment(order.timestamp).format('DD/MM/YYYY')}
 							</div>
-							<div className="inline-block text-right fs-14" style={{ width: '40%' }}>
+							<div className="inline-block text-right fs-14" style={{ width: '35%', height: '25px' }}>
 								{
 									order.status.toUpperCase() === 'CONFIRMED' &&
 									<span className="text-danger">
@@ -148,6 +147,9 @@ class Orders extends Component {
 									</Button>
 								}
 							</div>
+							<div>
+								<span className="fs-14 text-success">{moment(order.timestamp).format('hh:mm A')}</span>
+							</div>
 						</Card.Header>
 						<Card.Body style={{ padding: '.5rem' }}>
 							<div>{items}</div>
@@ -160,7 +162,7 @@ class Orders extends Component {
 			<div className="container">
 				<div className="row mt-5">
 					<div className="col-md-12 text-right">
-						<Button variant="danger" size="sm" onClick={this.getOrders.bind(this)} style={{ marginRight: '13px' }}>
+						<Button variant="warning" size="sm" onClick={this.getOrders.bind(this)} style={{ marginRight: '13px' }}>
 							<i className="fa fa-refresh"></i>
 						</Button>
 					</div>
