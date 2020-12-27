@@ -208,7 +208,7 @@ class Products extends Component {
 					<img
 						className="logo"
 						src={this.state.hotelInfo.hotel_logo_link}
-						alt={this.state.hotelInfo.hotel_name}
+						alt="Hotel logo"
 					/>
 				</div>
 				<div className="text-center fs-18 mb-10">
