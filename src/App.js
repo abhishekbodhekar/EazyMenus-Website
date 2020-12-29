@@ -1,5 +1,8 @@
 import React, { Component } from "react";
 import Home from './components/Home';
+import SignUp from './components/SignUp';
+import Login from './components/Login';
+import IncomingOrders from './components/IncomingOrders';
 import ErrorBoundary from './components/ErrorBoundary';
 import "./css/header.css";
 import "./css/footer.css";
@@ -18,6 +21,21 @@ class App extends Component {
 					<Route exact path="/">
 						<ErrorBoundary>
 							<Home />
+						</ErrorBoundary>
+					</Route>
+					<Route exact path="/mgmt/signup">
+						<ErrorBoundary>
+							<SignUp />
+						</ErrorBoundary>
+					</Route>
+					<Route exact path="/mgmt/login">
+						<ErrorBoundary>
+							<Login />
+						</ErrorBoundary>
+					</Route>
+					<Route exact path="/mgmt/incomingorders">
+						<ErrorBoundary>
+							<IncomingOrders />
 						</ErrorBoundary>
 					</Route>
 				</Switch>
