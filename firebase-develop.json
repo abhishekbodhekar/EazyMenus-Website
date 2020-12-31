@@ -4,7 +4,7 @@
     "site": "test-fudoz",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [ {
-      "source": "**", // <<< Do this in your firebase.json
+      "source": "**",  
      "function": "app"
                    }
                 ]
