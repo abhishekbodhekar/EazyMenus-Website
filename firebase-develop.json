@@ -2,6 +2,11 @@
   "hosting": {
     "public": "build",
     "site": "test-fudoz",
-    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"]
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+    "rewrites": [ {
+          "source": "/mgmt/signup",
+          "destination": "/mgmt/signup"
+                   }
+                ]
   }
 }
