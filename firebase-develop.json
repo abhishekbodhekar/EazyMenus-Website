@@ -4,8 +4,8 @@
     "site": "test-fudoz",
     "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
     "rewrites": [ {
-          "source": "/mgmt/signup",
-          "destination": "/mgmt/signup"
+      "source": "**", // <<< Do this in your firebase.json
+     "function": "app"
                    }
                 ]
   }
