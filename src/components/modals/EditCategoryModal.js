@@ -53,7 +53,6 @@ class EditCategoryModal extends Component {
             <Modal
                 size="md"
                 aria-labelledby="contained-modal-title-vcenter"
-                dialogClassName="mobile-modal"
                 scrollable="true"
                 show={this.props.show}
             >
