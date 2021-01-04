@@ -152,7 +152,7 @@ class Products extends Component {
 				if (!item.quantity) item.quantity = 0;
 				return (
 					<div key={itemIndex} className="menu-item">
-						<div className="">
+						<div>
 							<div className="inline-block vertical-align-top" style={{ width: '75%' }}>
 								<span className="text-capitalize">{item.name}</span>
 								<div className="itemDescription">{item.description}</div>

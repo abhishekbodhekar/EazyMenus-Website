@@ -179,10 +179,16 @@ class MyHotel extends Component {
 						style={{ justifyContent: 'center' }}
 						onSelect={(k) => this.setKey(k)}>
 						<Tab eventKey="myMenus" title="My Menu">
-							<MyMenus />
+							{
+								this.state.activeTab === 'myMenus' &&
+								<MyMenus />
+							}
 						</Tab>
 						<Tab eventKey="incOrders" title="Incoming Orders">
-							<IncomingOrders />
+							{
+								this.state.activeTab === 'incOrders' &&
+								<IncomingOrders />
+							}
 						</Tab>
 					</Tabs>
 				</div>

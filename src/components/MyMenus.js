@@ -53,9 +53,9 @@ class MyMenus extends Component {
 
 	addIDs(menus) {
 		menus.map((menu) => {
-			menu.id = uuidv4();
+			if (!menu.id) menu.id = uuidv4();
 			menu.items.map((item) => {
-				item.id = uuidv4();
+				if (!item.id) item.id = uuidv4();
 			});
 		});
 		return menus;
@@ -95,17 +95,22 @@ class MyMenus extends Component {
 	}
 
 	editMenuItem(item, categoryIndex, e) {
-		e.preventDefault();
-		e.stopPropagation();
 		let selectedItem = Object.assign({}, item);
 		selectedItem.categoryIndex = categoryIndex;
 		this.setState({ isEditMenu: true, selectedItem, itemModalTitle: 'Edit Item' });
 	}
 
+	deleteMenuItem(itemIndex, categoryIndex, e) {
+		this.state.menus[categoryIndex].items.splice(itemIndex, 1);
+		this.updateMenu();
+	}
+
 	addNewItem(categoryIndex, e) {
 		e.preventDefault();
 		e.stopPropagation();
-		console.log('Category index-', categoryIndex);
+		let selectedItem = {};
+		selectedItem.categoryIndex = categoryIndex;
+		this.setState({ isEditMenu: true, selectedItem, itemModalTitle: 'Add Item' });
 	}
 
 	setModalShow(bool) {
@@ -114,12 +119,14 @@ class MyMenus extends Component {
 
 	handleItemSubmit(changedItem, e) {
 		e.preventDefault();
-		this.setState({ selectedItem: changedItem });
-
+		this.state.selectedItem = Object.assign({}, changedItem);
+		if (!this.state.selectedItem.description) this.state.selectedItem.description = "";
 		let catIndex = this.state.selectedItem.categoryIndex;
-		let index = this.state.menus[catIndex].items.findIndex(x => x.id == this.state.selectedItem.id);
-		if (index >= 0) {
-			this.state.menus[catIndex].items[index] = this.state.selectedItem;
+		let itemIndex = this.state.menus[catIndex].items.findIndex(x => x.id == this.state.selectedItem.id);
+		if (this.state.selectedItem.id) {
+			this.state.menus[catIndex].items[itemIndex] = this.state.selectedItem;
+		} else {
+			this.state.menus[catIndex].items.push(this.state.selectedItem);
 		}
 		this.setState({ menus: this.state.menus, isEditMenu: false });
 		this.updateMenu();
@@ -135,7 +142,7 @@ class MyMenus extends Component {
 			this.state.menus.push(this.state.selectedCategory);
 		}
 		this.setState({ menus: this.state.menus, isEditCategory: false });
-		this.updateMenu();
+		// this.updateMenu();
 	}
 
 	updateMenu() {
@@ -149,8 +156,11 @@ class MyMenus extends Component {
 				'Content-Type': 'text/plain'
 			}
 		}).then(response => {
+			// if (response.data.Data && response.data.Data.menu) {
+			// 	this.setState({ menus: response.data.Data.menu });
+			// }
+			this.setState({ menus: this.addIDs(this.state.menus) });
 			stopLoader();
-			// this.getMenus();
 		}).catch(error => {
 			console.error(error);
 			stopLoader();
@@ -169,7 +179,6 @@ class MyMenus extends Component {
 	render() {
 		const categories = this.state.menus.map((cat, index) => {
 			const listItems = cat.items.map((item, itemIndex) => {
-				if (!item.quantity) item.quantity = 0;
 				return (
 					<div key={itemIndex} className="menu-item">
 						<div className="">
@@ -179,8 +188,12 @@ class MyMenus extends Component {
 								(<span className="fs-18"><i className="fa fa-inr"></i> {item.price}</span>)
 							</div>
 							<div className="inline-block text-right" style={{ width: '20%' }}>
-								<i className="text-success fa fa-edit" onClick={this.editMenuItem.bind(this, item, index)}></i>
-								<i className="text-danger fa fa-trash ml-10"></i>
+								<Button size="sm" variant="default">
+									<i className="text-success fa fa-edit" onClick={this.editMenuItem.bind(this, item, index)}></i>
+								</Button>
+								<Button size="sm" variant="default">
+									<i className="text-danger fa fa-trash" onClick={this.deleteMenuItem.bind(this, itemIndex, index)}></i>
+								</Button>
 							</div>
 						</div>
 					</div>
@@ -201,7 +214,7 @@ class MyMenus extends Component {
 								<i className="fa fa-plus"></i>
 							</Button>
 							<Button size="sm" variant="danger" className="" onClick={this.deleteCategory.bind(this, index)}>
-								<i className="fa fa-trash"></i>
+								<i className="fa fa-trash-o"></i>
 							</Button>
 						</div>
 					</div>
@@ -215,9 +228,9 @@ class MyMenus extends Component {
 		});
 
 		return (
-			<div>
+			<div className="container">
 				<div className="row">
-					<div className="col-md-12">
+					<div className="col-md-12 p-0 overflow-x-hidden">
 						{
 							this.state.menus.length <= 0 &&
 							<div className="text-center mt-10">

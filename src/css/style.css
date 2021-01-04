@@ -133,6 +133,10 @@
     overflow: hidden;
 }
 
+.overflow-x-hidden {
+    overflow-x: hidden;
+}
+
 .inline-block {
     display: inline-block !important;
 }
