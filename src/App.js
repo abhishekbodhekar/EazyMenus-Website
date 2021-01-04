@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
-import IncomingOrders from './components/IncomingOrders';
+import MyHotel from './components/MyHotel';
 import ErrorBoundary from './components/ErrorBoundary';
 import "./css/header.css";
 import "./css/footer.css";
@@ -10,6 +10,7 @@ import "./css/modal.css";
 import "./css/style.css";
 import "./css/menu.css";
 import "./css/orders.css";
+import "./css/management.css";
 import { Route, Switch } from "react-router-dom";
 
 class App extends Component {
@@ -33,9 +34,9 @@ class App extends Component {
 							<Login />
 						</ErrorBoundary>
 					</Route>
-					<Route exact path="/mgmt/incomingorders">
+					<Route exact path="/mgmt/myhotel">
 						<ErrorBoundary>
-							<IncomingOrders />
+							<MyHotel />
 						</ErrorBoundary>
 					</Route>
 				</Switch>

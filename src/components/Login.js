@@ -36,7 +36,7 @@ class Login extends Component {
                 alert(response.data.Data);
             } else {
                 setItem('hotelId', this.state.fields.username);
-                this.props.history.push("/mgmt/incomingorders");
+                this.props.history.push("/mgmt/myhotel");
             }
         }).catch(error => {
             console.error(error);

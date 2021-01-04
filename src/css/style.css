@@ -65,8 +65,16 @@
     margin-right: 10px;
 }
 
+.mr-20 {
+    margin-right: 20px;
+}
+
 .mt-5 {
     margin-top: 5px !important;
+}
+
+.mr-3 {
+    margin-right: 3px !important;
 }
 
 .mb-5 {
