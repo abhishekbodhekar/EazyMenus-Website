@@ -138,11 +138,11 @@ class MyMenus extends Component {
 		if (this.state.selectedCategory.id) {
 			this.state.menus[this.state.selectedCategory.categoryIndex] = this.state.selectedCategory;
 		} else {
-			this.state.selectedCategory.items = [];
+			if (!this.state.selectedCategory.items) this.state.selectedCategory.items = [];
 			this.state.menus.push(this.state.selectedCategory);
 		}
 		this.setState({ menus: this.state.menus, isEditCategory: false });
-		// this.updateMenu();
+		this.updateMenu();
 	}
 
 	updateMenu() {

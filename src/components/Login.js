@@ -5,6 +5,7 @@ import { setItem } from '../lib/myStore';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { withRouter } from 'react-router-dom';
+import { startLoader, stopLoader } from "../lib/utils";
 
 class Login extends Component {
     constructor() {
@@ -25,6 +26,7 @@ class Login extends Component {
     }
 
     handleSubmit(e) {
+        startLoader();
         e.preventDefault();
         let payload = Object.assign({}, this.state.fields);
         axios.post("https://us-central1-easymenuspro.cloudfunctions.net/Signin", payload, {
@@ -38,8 +40,10 @@ class Login extends Component {
                 setItem('hotelId', this.state.fields.username);
                 this.props.history.push("/mgmt/myhotel");
             }
+            stopLoader();
         }).catch(error => {
             console.error(error);
+            stopLoader();
         })
     }
 
