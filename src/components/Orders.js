@@ -37,6 +37,8 @@ class Orders extends Component {
 				this.setState({
 					orders: myOrders || []
 				});
+			} else {
+				this.setState({ orders: [] });
 			}
 			stopLoader();
 		}).catch(error => {

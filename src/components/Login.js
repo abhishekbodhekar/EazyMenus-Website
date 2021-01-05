@@ -4,7 +4,7 @@ import MgmtHeader from "./MgmtHeader";
 import { setItem } from '../lib/myStore';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 import { startLoader, stopLoader } from "../lib/utils";
 
 class Login extends Component {
@@ -61,7 +61,7 @@ class Login extends Component {
                         <Form onSubmit={this.handleSubmit.bind(this)}>
                             <Form.Group controlId="username">
                                 <Form.Label>Username</Form.Label>
-                                <Form.Control type="text" maxLength="20" placeholder="Enter Username" required value={this.state.fields.username} onChange={this.handleChange.bind(this, 'username')} />
+                                <Form.Control autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" className="text-lowercase" type="text" maxLength="20" placeholder="Enter Username" required value={this.state.fields.username} onChange={this.handleChange.bind(this, 'username')} />
                                 <Form.Text className="text-muted">
                                     Username is your hotel ID.
 								</Form.Text>
@@ -76,6 +76,9 @@ class Login extends Component {
                                 <Button variant="warning" type="submit">
                                     Log In
 								</Button>
+                            </div>
+                            <div className="text-center mt-10 fs-14">
+                                New User? <Link to="/mgmt/signup">Click here for Signup</Link>
                             </div>
                         </Form>
                     </div>

@@ -3,7 +3,7 @@ import axios from "axios";
 import MgmtHeader from "./MgmtHeader";
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { withRouter } from 'react-router-dom';
+import { Link, withRouter } from 'react-router-dom';
 
 class SignUp extends Component {
 	constructor() {
@@ -13,6 +13,8 @@ class SignUp extends Component {
 				"hotel_name": "",
 				"owner_name": "",
 				"password": "",
+				"confirmpassword": "",
+				"masterpass": "",
 				"username": "",
 				"contactNo": "",
 				"logo": "",
@@ -32,7 +34,12 @@ class SignUp extends Component {
 
 	handleSubmit(e) {
 		e.preventDefault();
+		if (this.state.fields.password !== this.state.fields.confirmpassword) {
+			alert("Password and Confirm password does not match.");
+			return false;
+		}
 		let payload = Object.assign({}, this.state.fields);
+		delete payload.confirmpassword;
 		payload.isOrderEnabled = this.state.fields.isOrderEnabled ? '1' : '0';
 		axios.post("https://us-central1-easymenuspro.cloudfunctions.net/Signup", payload, {
 			headers: {
@@ -77,7 +84,7 @@ class SignUp extends Component {
 
 							<Form.Group controlId="username">
 								{/* <Form.Label>Username</Form.Label> */}
-								<Form.Control type="text" maxLength="20" placeholder="Enter Username" required value={this.state.fields.username} onChange={this.handleChange.bind(this, 'username')} />
+								<Form.Control autoComplete="off" autoCorrect="off" autoCapitalize="off" spellCheck="false" className="text-lowercase" type="text" maxLength="20" placeholder="Enter Username" required value={this.state.fields.username} onChange={this.handleChange.bind(this, 'username')} />
 								<Form.Text className="text-muted">
 									Username will be used as hotel ID.
 								</Form.Text>
@@ -89,6 +96,18 @@ class SignUp extends Component {
 								<Form.Text className="text-muted">
 									Min. length of password should be 6 characters.
 								</Form.Text>
+							</Form.Group>
+
+							<Form.Group controlId="confirmpassword">
+								{/* <Form.Label>Confirm Password</Form.Label> */}
+								<Form.Control type="password" placeholder="Confirm Password" minLength="6" required value={this.state.fields.confirmpassword} onChange={this.handleChange.bind(this, 'confirmpassword')} />
+							</Form.Group>
+
+							<Form.Group controlId="masterpass">
+								<Form.Control type="password" placeholder="Master Password" minLength="6" required value={this.state.fields.masterpass} onChange={this.handleChange.bind(this, 'masterpass')} />
+								{/* <Form.Text className="text-muted">
+									Min. length of password should be 6 characters.
+								</Form.Text> */}
 							</Form.Group>
 
 							<Form.Group controlId="contactNo">
@@ -114,6 +133,9 @@ class SignUp extends Component {
 								<Button variant="warning" type="submit">
 									Sign me Up
 								</Button>
+							</div>
+							<div className="text-center mt-10 fs-14">
+								Already registered? <Link to="/mgmt/login">Click here to Login</Link>
 							</div>
 						</Form>
 					</div>

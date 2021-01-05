@@ -18,7 +18,7 @@ const MgmtHeader = props => {
 					<img src={fudozLogo} alt="fudoz logo" style={{ height: '55px' }}></img>
 				</div>
 				{
-					window.location.pathname !== '/mgmt/login' &&
+					(window.location.pathname !== '/mgmt/login' && window.location.pathname !== '/mgmt/signup') &&
 					<a
 						className="cart-icon mr-20"
 						href="#"

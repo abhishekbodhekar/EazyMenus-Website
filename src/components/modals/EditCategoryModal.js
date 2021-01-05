@@ -46,6 +46,9 @@ class EditCategoryModal extends Component {
                     <td>
                         <input required type="number" value={item.price} placeholder="Rs." className="form-control" onChange={this.handleItemChange.bind(this, index, 'price')}></input>
                     </td>
+                    <td>
+                        <textarea rows="1" required type="text" value={item.description} placeholder="Description" className="form-control" onChange={this.handleItemChange.bind(this, index, 'description')}></textarea>
+                    </td>
                 </tr>
             </tbody>);
         });
@@ -75,8 +78,9 @@ class EditCategoryModal extends Component {
                                 <Table responsive bordered size="sm">
                                     <thead style={{ backgroundColor: '#eee' }}>
                                         <tr>
-                                            <th width="78%" className="text-left">Name</th>
-                                            <th width="22%" className="text-left">Price</th>
+                                            <th width="40%" className="text-left">Name</th>
+                                            <th width="20%" className="text-left">Price</th>
+                                            <th width="40%" className="text-left">Description</th>
                                         </tr>
                                     </thead>
                                     {tbody}

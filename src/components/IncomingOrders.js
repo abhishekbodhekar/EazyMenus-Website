@@ -24,8 +24,8 @@ class IncomingOrders extends Component {
 		this.setState({ orders: this.state.orders });
 	}
 
-	getOrders() {
-		startLoader();
+	getOrders(isSilent) {
+		if (!isSilent) startLoader();
 		let url = "https://us-central1-easymenuspro.cloudfunctions.net/GetOrders";
 		axios.post(url, { H_ID: getItem('hotelId') }, {
 			headers: {
@@ -85,6 +85,7 @@ class IncomingOrders extends Component {
 				}
 			}).then(response => {
 				this.state.orders[tableIndex].orders.splice(orderIndex, 1);
+				if (this.state.orders[tableIndex].orders.length === 0) this.state.orders.splice(tableIndex, 1);
 				this.setState({ orders: this.state.orders });
 				alert(response.data.Data);
 				stopLoader();
@@ -152,8 +153,46 @@ class IncomingOrders extends Component {
 		});
 	}
 
+	confirmOrder(tableIndex, orderIndex, e) {
+		e.preventDefault();
+		let table = this.state.orders[tableIndex];
+		let cnf = window.confirm(`Confirm order?`);
+		if (!cnf) return false;
+		startLoader();
+		let payload = {
+			H_ID: getItem('hotelId'),
+			table_id: table.table_id,
+			order_id: table.orders[orderIndex].id
+		};
+		axios.post("https://us-central1-easymenuspro.cloudfunctions.net/ConfirmOrder", payload, {
+			headers: {
+				'Content-Type': 'text/plain'
+			}
+		}).then(response => {
+			if (response.data.Status) {
+				this.state.orders[tableIndex].orders[orderIndex].status = 'Confirmed';
+				this.setState({ orders: this.state.orders });
+				stopLoader();
+				// this.getOrders();
+			}
+		}).catch((error) => {
+			console.error(error);
+			stopLoader();
+		});
+	}
+
 	componentWillMount() {
 		this.getOrders();
+	}
+
+	componentDidMount() {
+		this.interval = setInterval(() => {
+			this.getOrders(true);
+		}, 15 * 1000);
+	}
+
+	componentWillUnmount() {
+		clearInterval(this.interval);
 	}
 
 	render() {
@@ -192,9 +231,14 @@ class IncomingOrders extends Component {
 									}
 									{
 										order.status.toUpperCase() === 'ORDERED' &&
-										<Button variant="danger" size="sm" onClick={this.cancelWholeOrder.bind(this, tableIndex, orderIndex)}>
-											<i className="fa fa-times text-light"></i>
-										</Button>
+										<div>
+											<Button variant="success" className="mr-3" size="sm" onClick={this.confirmOrder.bind(this, tableIndex, orderIndex)}>
+												<i className="fa fa-check-circle"></i>
+											</Button>
+											<Button variant="danger" size="sm" onClick={this.cancelWholeOrder.bind(this, tableIndex, orderIndex)}>
+												<i className="fa fa-times text-light"></i>
+											</Button>
+										</div>
 									}
 								</div>
 								<div>
@@ -214,7 +258,7 @@ class IncomingOrders extends Component {
 						<div className="inline-block" style={{ width: '70%' }}>
 							<span>Table - {table.table_id}</span>
 						</div>
-						<div className="inline-block" style={{ width: '30%' }}>
+						<div className="inline-block text-right" style={{ width: '30%' }}>
 							<Button variant="warning" size="sm" onClick={this.checkoutTable.bind(this, tableIndex)}>
 								<i className="text-success fa fa-share"></i>&nbsp;Checkout
 							</Button>
@@ -231,6 +275,13 @@ class IncomingOrders extends Component {
 
 		return (
 			<div className="container">
+				<div className="row mt-5">
+					<div className="col-md-12 text-right">
+						<Button variant="warning" size="sm" onClick={this.getOrders.bind(this)} style={{ marginRight: '13px' }}>
+							<i className="fa fa-refresh"></i>
+						</Button>
+					</div>
+				</div>
 				<div className="row">
 					<div className="col-md-12 p-0 overflow-x-hidden">
 						{
