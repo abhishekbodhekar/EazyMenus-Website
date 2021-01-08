@@ -29,6 +29,11 @@ class EditCategoryModal extends Component {
         this.setState({ selectedCategory: this.state.selectedCategory });
     }
 
+    removeItem() {
+        this.state.selectedCategory.items.splice(this.state.selectedCategory.items.length - 1, 1);
+        this.setState({ selectedCategory: this.state.selectedCategory });
+    }
+
     componentDidMount() {
         if (!this.state.selectedCategory.items) {
             this.state.selectedCategory.items = [{ name: '', price: 0, description: '' }]
@@ -47,7 +52,7 @@ class EditCategoryModal extends Component {
                         <input required type="number" value={item.price} placeholder="Rs." className="form-control" onChange={this.handleItemChange.bind(this, index, 'price')}></input>
                     </td>
                     <td>
-                        <textarea rows="1" required type="text" value={item.description} placeholder="Description" className="form-control" onChange={this.handleItemChange.bind(this, index, 'description')}></textarea>
+                        <textarea rows="1" type="text" value={item.description} placeholder="Description" className="form-control" onChange={this.handleItemChange.bind(this, index, 'description')}></textarea>
                     </td>
                 </tr>
             </tbody>);
@@ -74,12 +79,12 @@ class EditCategoryModal extends Component {
                         </div>
                         <div className="row mt-20">
                             <div className="col-sm-12 col-md-12">
-                                <label>Items<span className="text-danger">*</span></label>
+                                <label>Items</label>
                                 <Table responsive bordered size="sm">
                                     <thead style={{ backgroundColor: '#eee' }}>
                                         <tr>
-                                            <th width="40%" className="text-left">Name</th>
-                                            <th width="20%" className="text-left">Price</th>
+                                            <th width="40%" className="text-left">Name<span className="text-danger">*</span></th>
+                                            <th width="20%" className="text-left">Price<span className="text-danger">*</span></th>
                                             <th width="40%" className="text-left">Description</th>
                                         </tr>
                                     </thead>
@@ -89,6 +94,9 @@ class EditCategoryModal extends Component {
                         </div>
                         <div className="row">
                             <div className="col-md-12 col-sm-12 text-right">
+                                <Button disabled={this.state.selectedCategory.items.length == 1} variant="warning mr-3" size="sm" type="button" onClick={this.removeItem.bind(this)}>
+                                    <i className="fa fa-minus"></i>
+                                </Button>
                                 <Button variant="warning" size="sm" type="button" onClick={this.addNewItem.bind(this)}>
                                     <i className="fa fa-plus"></i>
                                 </Button>

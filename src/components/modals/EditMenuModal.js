@@ -32,18 +32,18 @@ class EditMenuModal extends Component {
                         {this.props.modalTitle}
                     </Modal.Title>
                 </Modal.Header>
-                <form className="modalForm">
+                <form className="modalForm" onSubmit={this.props.onSubmit(this.state.selectedItem)}>
                     <Modal.Body style={{ maxHeight: '65vh' }}>
                         <div className="row">
                             <div className="col-sm-12 col-md-12">
                                 <label>Item name&nbsp;<span className="text-danger">*</span></label>
-                                <input placeholder="E.g. Paneer Chili, Veg Makhanwala" required className="form-control" type="text" value={this.state.selectedItem.name || ''} onChange={this.handleChange.bind(this, 'name')}></input>
+                                <input placeholder="E.g. Paneer Chili, Veg Makhanwala" required={true} className="form-control" type="text" value={this.state.selectedItem.name || ''} onChange={this.handleChange.bind(this, 'name')}></input>
                                 <label>Item price&nbsp;<span className="text-danger">*</span></label>
-                                <InputGroup required>
+                                <InputGroup>
                                     <InputGroup.Prepend>
                                         <InputGroup.Text><i className="fa fa-inr"></i></InputGroup.Text>
                                     </InputGroup.Prepend>
-                                    <FormControl placeholder="Price per plate" type="number" value={this.state.selectedItem.price || ''} onChange={this.handleChange.bind(this, 'price')} />
+                                    <FormControl required={true} placeholder="Price per plate" type="number" value={this.state.selectedItem.price || ''} onChange={this.handleChange.bind(this, 'price')} />
                                 </InputGroup>
                                 <label>Description</label>
                                 <textarea className="form-control" placeholder="Describe the item" value={this.state.selectedItem.description || ''} onChange={this.handleChange.bind(this, 'description')}></textarea>
@@ -52,7 +52,7 @@ class EditMenuModal extends Component {
                     </Modal.Body>
                     <Modal.Footer>
                         {/* <Button onClick={this.props.onHide}>Close</Button> */}
-                        <Button type="submit" onClick={this.props.onSubmit(this.state.selectedItem)}>Save</Button>
+                        <Button variant="success" type="submit">Save</Button>
                     </Modal.Footer>
                 </form>
             </Modal>

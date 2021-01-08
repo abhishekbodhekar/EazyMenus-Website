@@ -79,6 +79,7 @@ class MyMenus extends Component {
 		//on success-
 		this.state.menus.splice(index, 1);
 		this.setState({ menus: this.state.menus });
+		this.updateMenu();
 	}
 
 	openCategoryModal(categoryIndex, e) {
@@ -101,7 +102,12 @@ class MyMenus extends Component {
 	}
 
 	deleteMenuItem(itemIndex, categoryIndex, e) {
-		this.state.menus[categoryIndex].items.splice(itemIndex, 1);
+		if (this.state.menus[categoryIndex].items.length === 1) {
+			console.log('1 left');
+			this.state.menus.splice(categoryIndex, 1);
+		} else {
+			this.state.menus[categoryIndex].items.splice(itemIndex, 1);
+		}
 		this.updateMenu();
 	}
 
