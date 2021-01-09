@@ -94,7 +94,7 @@ class EditCategoryModal extends Component {
                         </div>
                         <div className="row">
                             <div className="col-md-12 col-sm-12 text-right">
-                                <Button disabled={this.state.selectedCategory.items.length == 1} variant="warning mr-3" size="sm" type="button" onClick={this.removeItem.bind(this)}>
+                                <Button disabled={this.state.selectedCategory.items && this.state.selectedCategory.items.length == 1} variant="warning mr-3" size="sm" type="button" onClick={this.removeItem.bind(this)}>
                                     <i className="fa fa-minus"></i>
                                 </Button>
                                 <Button variant="warning" size="sm" type="button" onClick={this.addNewItem.bind(this)}>

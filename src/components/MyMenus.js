@@ -75,7 +75,6 @@ class MyMenus extends Component {
 		e.stopPropagation();
 		let cnf = window.confirm(`Do you want to delete ${catToDelete.category} category? This will delete all items under this category.`);
 		if (!cnf) return false;
-		console.log('Call delete api');
 		//on success-
 		this.state.menus.splice(index, 1);
 		this.setState({ menus: this.state.menus });

@@ -6,6 +6,7 @@ import { getItem } from "../lib/myStore";
 import { groupBy } from "../lib/predicate";
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import Badge from 'react-bootstrap/Badge'
 import moment from "moment";
 
 class IncomingOrders extends Component {
@@ -14,6 +15,7 @@ class IncomingOrders extends Component {
 		this.state = {
 			orders: []
 		};
+		this.tablesCopy = [];
 	}
 
 	togglePanel(e, $index) {
@@ -22,6 +24,7 @@ class IncomingOrders extends Component {
 			else menu.open = false;
 		});
 		this.setState({ orders: this.state.orders });
+		this.tablesCopy =  JSON.parse(JSON.stringify(this.state.orders));
 	}
 
 	getOrders(isSilent) {
@@ -37,12 +40,28 @@ class IncomingOrders extends Component {
 				this.setState({
 					orders
 				});
+			} else {
+				this.setState({orders: []});
 			}
+			if (isSilent) this.setExpandedTablesOpen();
+			this.tablesCopy =  JSON.parse(JSON.stringify(this.state.orders));
 			stopLoader();
 		}).catch(error => {
 			console.error(error);
 			stopLoader();
 		});
+	}
+
+	setExpandedTablesOpen() {
+		this.tablesCopy.map((table) => {
+			console.log(table);
+			this.state.orders.map((order) => {
+				if (table.table_id == order.table_id) {
+					order.open = table.open;
+				}
+			});
+		});
+		this.setState({orders: this.state.orders});
 	}
 
 	groupOrdersTablewise(orders) {
@@ -115,7 +134,7 @@ class IncomingOrders extends Component {
 			}).then(response => {
 				this.state.orders[tableIndex].orders[orderIndex].items.splice(itemIndex, 1);
 				if (this.state.orders[tableIndex].orders[orderIndex].items.length === 0) {
-					this.state.orders[tableIndex].order.splice(orderIndex, 1);
+					this.state.orders[tableIndex].orders.splice(orderIndex, 1);
 				}
 				if (this.state.orders[tableIndex].orders.length === 0) {
 					this.state.orders.splice(tableIndex, 1);
@@ -206,10 +225,7 @@ class IncomingOrders extends Component {
 								<span className="fs-14 ml-10">-&nbsp;{item.quantity}</span>
 							</div>
 							<div className="inline-block" style={{ width: '10%' }}>
-								{
-									order.status.toUpperCase() === 'ORDERED' &&
-									<i className="fa fa-times text-danger" onClick={this.cancelItemInOrder.bind(this, tableIndex, orderIndex, itemIndex)}></i>
-								}
+								<i className="fa fa-times text-danger pointer" onClick={this.cancelItemInOrder.bind(this, tableIndex, orderIndex, itemIndex)}></i>
 							</div>
 						</div>
 					)
@@ -224,10 +240,11 @@ class IncomingOrders extends Component {
 								<div className="inline-block text-right fs-14" style={{ width: '35%', height: '25px' }}>
 									{
 										order.status.toUpperCase() === 'CONFIRMED' &&
-										<span className="text-danger">
-											Confirmed! &nbsp;
-											<i className="fa fa-check-circle-o text-success"></i>
-										</span>
+										<div>
+											<Button variant="danger" size="sm" className="ml-10" onClick={this.cancelWholeOrder.bind(this, tableIndex, orderIndex)}>
+												<i className="fa fa-times text-light"></i>
+											</Button>
+										</div>
 									}
 									{
 										order.status.toUpperCase() === 'ORDERED' &&
@@ -241,9 +258,18 @@ class IncomingOrders extends Component {
 										</div>
 									}
 								</div>
-								<div>
+								<div className="inline-block" style={{ width: '65%' }}>
 									<span className="fs-14 text-success">{moment(order.timestamp).format('hh:mm A')}</span>
 								</div>
+								{
+									order.status.toUpperCase() === 'CONFIRMED' &&
+										<div className="inline-block text-right fs-14 pt-10" style={{ width: '35%'}}>
+											<span className="text-danger">
+												Confirmed&nbsp;
+												<i className="fa fa-check-circle-o text-success"></i>
+											</span>
+										</div>
+								}
 							</Card.Header>
 							<Card.Body style={{ padding: '.5rem' }}>
 								<div>{items}</div>
@@ -257,11 +283,19 @@ class IncomingOrders extends Component {
 					<div onClick={(e) => this.togglePanel(e, tableIndex)} className='category text-capitalize' aria-expanded={table.open} aria-controls="example-collapse-text">
 						<div className="inline-block" style={{ width: '70%' }}>
 							<span>Table - {table.table_id}</span>
+							<Badge pill variant="danger" className="ml-3">
+								<span>
+									{table.orders.filter((order) => order.status.toUpperCase() !== 'CONFIRMED').length}
+								</span>
+							</Badge>
 						</div>
 						<div className="inline-block text-right" style={{ width: '30%' }}>
-							<Button variant="warning" size="sm" onClick={this.checkoutTable.bind(this, tableIndex)}>
-								<i className="text-success fa fa-share"></i>&nbsp;Checkout
-							</Button>
+							{
+								table.orders.filter((order) => order.status.toUpperCase() === 'ORDERED').length == 0 &&
+								<Button variant="warning" size="sm" onClick={this.checkoutTable.bind(this, tableIndex)}>
+									<i className="text-success fa fa-share"></i>&nbsp;Checkout
+								</Button>
+							}
 						</div>
 					</div>
 					<Collapse in={table.open}>
