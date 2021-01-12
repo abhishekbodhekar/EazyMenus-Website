@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import Default from './components/Default';
 import Home from './components/Home';
 import SignUp from './components/SignUp';
 import Login from './components/Login';
@@ -13,6 +14,8 @@ import "./css/orders.css";
 import "./css/management.css";
 import { Route, Switch } from "react-router-dom";
 
+import NotFound from './errorpages/NotFound';
+
 class App extends Component {
 	render() {
 		return (
@@ -20,6 +23,11 @@ class App extends Component {
 				{ /* Route components are rendered if the path prop matches the current URL */}
 				<Switch>
 					<Route exact path="/">
+						<ErrorBoundary>
+							<Default />
+						</ErrorBoundary>
+					</Route>
+					<Route exact path="/hotels">
 						<ErrorBoundary>
 							<Home />
 						</ErrorBoundary>
@@ -39,6 +47,7 @@ class App extends Component {
 							<MyHotel />
 						</ErrorBoundary>
 					</Route>
+					<Route component={NotFound} />
 				</Switch>
 			</div>
 		);
