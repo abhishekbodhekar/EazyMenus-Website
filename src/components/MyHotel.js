@@ -1,17 +1,23 @@
 import React, { Component } from "react";
 import Card from 'react-bootstrap/Card';
+import MgmtHeader from "./MgmtHeader";
 import Button from 'react-bootstrap/Button';
 import axios from 'axios';
 import moment from "moment";
 import { getItem } from '../lib/myStore';
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
 import { startLoader, stopLoader } from '../lib/utils';
+import MyMenus from './MyMenus';
+import IncomingOrders from './IncomingOrders';
 
-class Orders extends Component {
+class MyHotel extends Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			orders: [],
-			table_id: getItem('tableId')
+			table_id: getItem('tableId'),
+			activeTab: 'myMenus'
 		};
 	}
 
@@ -37,8 +43,6 @@ class Orders extends Component {
 				this.setState({
 					orders: myOrders || []
 				});
-			} else {
-				this.setState({ orders: [] });
 			}
 			stopLoader();
 		}).catch(error => {
@@ -49,6 +53,10 @@ class Orders extends Component {
 
 	componentWillMount() {
 		this.getOrders();
+	}
+
+	setKey(selectedTab) {
+		this.setState({ activeTab: selectedTab });
 	}
 
 	cancelWholeOrder(orderIndex) {
@@ -161,28 +169,32 @@ class Orders extends Component {
 			)
 		});
 		return (
-			<div className="container">
-				<div className="row mt-5">
-					<div className="col-md-12 text-right">
-						<Button variant="warning" size="sm" onClick={this.getOrders.bind(this)} style={{ marginRight: '13px' }}>
-							<i className="fa fa-refresh"></i>
-						</Button>
-					</div>
-				</div>
-				<div className="row">
-					<div className="col-md-12" style={{ padding: '0 .5rem 0 .5rem' }}>
-						{this.state.orders.length > 0 && orders}
-						{
-							this.state.orders.length <= 0 &&
-							<div className="text-center p-10">
-								<h5>Currently there are no orders</h5>
-							</div>
-						}
-					</div>
+			<div>
+				<MgmtHeader />
+				<div className="myhotel-content">
+					<Tabs
+						id="controlled-tab-example"
+						activeKey={this.state.activeTab}
+						variant="tabs"
+						style={{ justifyContent: 'center' }}
+						onSelect={(k) => this.setKey(k)}>
+						<Tab eventKey="myMenus" title="My Menu">
+							{
+								this.state.activeTab === 'myMenus' &&
+								<MyMenus />
+							}
+						</Tab>
+						<Tab eventKey="incOrders" title="Incoming Orders">
+							{
+								this.state.activeTab === 'incOrders' &&
+								<IncomingOrders />
+							}
+						</Tab>
+					</Tabs>
 				</div>
 			</div>
 		);
 	}
 }
 
-export default Orders;
+export default MyHotel;

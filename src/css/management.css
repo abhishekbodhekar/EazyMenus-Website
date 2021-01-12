@@ -1,0 +1,15 @@
+.myhotel-content {
+    padding-top: 8rem;
+    animation-delay: .15s;
+    /* background-color: #F5F5F5; */
+    /* width: 100%; */
+    animation: slideUp 300ms linear;
+    font-family: verdana;
+    padding-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+    .myhotel-content {
+        padding-top: 6rem;
+   }
+}

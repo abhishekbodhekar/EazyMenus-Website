@@ -48,6 +48,9 @@ class Home extends Component {
 				'Content-Type': 'text/plain'
 			}
 		}).then(response => {
+			if (!response.data.Status) {
+				return alert(response.data.Data);
+			}
 			this.setState({
 				products: response.data.Data.menu,
 				hotelInfo: {

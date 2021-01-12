@@ -41,6 +41,22 @@
     padding-left: 15px;
 }
 
+.pt-5 {
+    padding-top: 5px !important;
+}
+
+.pb-5 {
+    padding-bottom: 5px !important;
+}
+
+.pt-10 {
+    padding-top: 10px !important;
+}
+
+.pb-10 {
+    padding-bottom: 10px !important;
+}
+
 .p-15 {
     padding: 15px;
 }
@@ -65,12 +81,24 @@
     margin-right: 10px;
 }
 
+.mr-20 {
+    margin-right: 20px;
+}
+
 .mt-5 {
     margin-top: 5px !important;
 }
 
+.mr-3 {
+    margin-right: 3px !important;
+}
+
 .mb-5 {
     margin-bottom: 5px !important;
+}
+
+.mt-20 {
+    margin-top: 20px !important;
 }
 
 .ml-5 {
@@ -117,8 +145,16 @@
     float: left;
 }
 
+.pointer {
+    cursor: pointer !important;
+}
+
 .overflow-hidden {
     overflow: hidden;
+}
+
+.overflow-x-hidden {
+    overflow-x: hidden;
 }
 
 .inline-block {
@@ -160,4 +196,20 @@
 .disabled {
     opacity: 0.65;
     pointer-events: none;
+}
+
+.signup-form {
+    padding-top: 7rem;
+    animation-delay: .15s;
+    /* background-color: #F5F5F5; */
+    /* width: 100%; */
+    animation: slideUp 300ms linear;
+    font-family: verdana;
+    padding-bottom: 1rem;
+}
+
+@media (max-width: 480px) {
+    .signup-form {
+        padding-top: 5rem;
+   }
 }
